@@ -1,6 +1,6 @@
 # grfn
 
-> TODO
+> Runs a dependency graph of async functions as concurrently as possible and threads the outputs of dependencies into dependent functions.
 
 ## Install
 

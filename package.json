@@ -6,9 +6,16 @@
     "email": "tomeraberbach@gmail.com",
     "url": "https://tomeraberba.ch"
   },
-  "description": "TODO",
+  "description": "Runs a dependency graph of async functions as concurrently as possible and threads the outputs of dependencies into dependent functions.",
   "keywords": [
-    "TODO"
+    "graph",
+    "dag",
+    "dependency",
+    "concurrently",
+    "async",
+    "function",
+    "solver",
+    "topological"
   ],
   "files": [
     "./dist"
