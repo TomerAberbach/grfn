@@ -7,7 +7,9 @@
     "url": "https://tomeraberba.ch"
   },
   "description": "TODO",
-  "keywords": ["TODO"],
+  "keywords": [
+    "TODO"
+  ],
   "files": [
     "./dist"
   ],
@@ -50,7 +52,18 @@
           ]
         }
       ]
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "test.js"
+        ],
+        "rules": {
+          "node/no-unsupported-features/es-builtins": "off",
+          "node/no-unsupported-features/es-syntax": "off"
+        }
+      }
+    ]
   },
   "browserslist": [
     "defaults",

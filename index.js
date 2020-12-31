@@ -37,7 +37,10 @@ const createGraph = vertices => {
 
       assert(
         !explored.has(fn),
-        () => `acyclic: ${[...explored, fn].map(exploredFn => exploredFn.name).join(` <- `)}`
+        () =>
+          `acyclic: ${[...explored, fn]
+            .map(exploredFn => exploredFn.name)
+            .join(` <- `)}`
       )
 
       if (visited.has(fn)) {
@@ -66,7 +69,9 @@ export const grfn = vertices => {
   const { graph, outputFn } = createGraph(vertices)
 
   return (...inputs) => {
-    const resolvers = new Map(Array.from(graph.keys(), fn => [fn, createResolver()]))
+    const resolvers = new Map(
+      Array.from(graph.keys(), fn => [fn, createResolver()])
+    )
 
     for (const [fn, dependencies] of graph.entries()) {
       Promise.all(
