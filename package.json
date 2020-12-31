@@ -1,0 +1,104 @@
+{
+  "type": "module",
+  "name": "grfn",
+  "author": {
+    "name": "Tomer Aberbach",
+    "email": "tomeraberbach@gmail.com",
+    "url": "https://tomeraberba.ch"
+  },
+  "description": "TODO",
+  "keywords": ["TODO"],
+  "files": [
+    "./dist"
+  ],
+  "module": "./dist/index.js",
+  "main": "./dist/index.cjs",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.cjs"
+  },
+  "homepage": "https://github.com/TomerAberbach/grfn",
+  "repository": "TomerAberbach/grfn",
+  "bugs": {
+    "url": "https://github.com/TomerAberbach/grfn/issues"
+  },
+  "license": "Apache 2.0",
+  "scripts": {
+    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
+    "lint:prettier": "pnpm run lint:prettier:base -- --write .",
+    "lint:eslint:base": "eslint --ext js --ignore-path .gitignore",
+    "lint:eslint": "pnpm run lint:eslint:base -- --fix .",
+    "lint": "run-s lint:*",
+    "test": "ava",
+    "coverage": "c8 pnpm run test",
+    "build": "bundt index.js --minify",
+    "prepublishOnly": "run-s lint build"
+  },
+  "prettier": "@tomer/prettier-config",
+  "eslintConfig": {
+    "extends": "@tomer",
+    "plugins": [
+      "node"
+    ],
+    "rules": {
+      "node/no-unsupported-features/es-builtins": "error",
+      "node/no-unsupported-features/es-syntax": [
+        "error",
+        {
+          "ignores": [
+            "modules"
+          ]
+        }
+      ]
+    }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not op_mini all"
+  ],
+  "terser": {
+    "toplevel": true,
+    "ecma": 2015,
+    "mangle": {
+      "properties": true
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "pnpm run lint:prettier:base -- --write",
+      "pnpm run lint:eslint:base -- --fix"
+    ],
+    "!(pnpm-lock).{json,yaml,md}": "pnpm run lint:prettier:base -- --write"
+  },
+  "commitlint": {
+    "extends": "@commitlint/config-conventional"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@commitlint/config-conventional": "11.0.0",
+    "@tomer/eslint-config": "0.0.14",
+    "@tomer/prettier-config": "0.0.2",
+    "ava": "3.14.0",
+    "ava-fast-check": "4.0.0",
+    "babel-eslint": "10.1.0",
+    "bundt": "1.1.2",
+    "c8": "7.4.0",
+    "eslint": "7.16.0",
+    "eslint-plugin-node": "11.1.0",
+    "fast-check": "2.10.0",
+    "husky": "4.3.6",
+    "lint-staged": "10.5.3",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.2.1"
+  },
+  "engines": {
+    "node": ">= 6.0.0"
+  }
+}
