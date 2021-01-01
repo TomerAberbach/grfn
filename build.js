@@ -1,57 +1,97 @@
+/**
+ * Copyright 2021 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
 import { minify } from 'terser'
-
-const UNITS = [`B `, `kB`, `MB`, `GB`]
-function size(val = 0) {
-  if (val < 1e3) {
-    return `${val} ${UNITS[0]}`
-  }
-  const exp = Math.min(Math.floor(Math.log10(val) / 3), UNITS.length - 1) || 1
-  let out = (val / 1e3 ** exp).toPrecision(3)
-  const idx = out.indexOf(`.`)
-  if (idx === -1) {
-    out += `.00`
-  } else if (out.length - idx - 1 !== 2) {
-    // 2 + 1 for 0-based
-    out = `${out}00`.substring(0, idx + 3)
-  }
-  return `${out} ${UNITS[exp]}`
-}
+import { grfn } from './src/index.js'
 
 const gzip = promisify(gzipCb)
 
-const files = [`debug.js`, `index.js`, `validate.js`]
-const build = async () => {
+const terserConfig = {
+  ecma: 2015,
+  mangle: {
+    properties: true
+  },
+  toplevel: true,
+  nameCache: {}
+}
+
+const mapAsync = (array, fn) => array.map(async value => fn(await value))
+
+const ensureDist = async () => {
   try {
     await fs.mkdir(`./dist`)
-  } catch {}
-  const { terser } = JSON.parse(
-    (await fs.readFile(`./package.json`)).toString(`utf8`)
-  )
-
-  const queue = []
-
-  await Promise.all(
-    files.map(async file => {
-      const source = (await fs.readFile(`./src/${file}`)).toString(`utf8`)
-      const minified = (await minify(source, terser)).code
-
-      queue.push(
-        file,
-        `Size: ${size(minified.length)}`,
-        `Size (gzip): ${size((await gzip(minified)).length)}`,
-        ``
-      )
-
-      await fs.writeFile(`./dist/${file}`, minified)
-    })
-  )
-
-  for (const a of queue) {
-    console.log(a)
+  } catch (error) {
+    if (error.code !== `EEXIST`) {
+      throw error
+    }
   }
 }
 
-build()
+const findFiles = () => fs.readdir(`./src`)
+
+const readFiles = names =>
+  names.map(async name => ({
+    name,
+    code: (await fs.readFile(`./src/${name}`)).toString(`utf8`)
+  }))
+
+const minifyFiles = files =>
+  mapAsync(files, async ({ name, code }) => ({
+    name,
+    code: (await minify(code, terserConfig)).code
+  }))
+
+const outputFiles = files =>
+  Promise.all(
+    mapAsync(files, ({ name, code }) => fs.writeFile(`./dist/${name}`, code))
+  )
+
+const computeFileSizes = async files => {
+  const sizes = await Promise.all(
+    mapAsync(files, async ({ name, code }) => ({
+      name,
+      minified: code.length,
+      gzipped: (await gzip(code)).length
+    }))
+  )
+  sizes.sort((a, b) => a.name.localeCompare(b.name))
+  return sizes
+}
+
+const logFileSizes = sizes => {
+  for (const { name, minified, gzipped } of sizes) {
+    console.log(name)
+    console.log(`Size: ${minified} B`)
+    console.log(`Gzipped: ${gzipped} B`)
+    console.log()
+  }
+}
+
+grfn([
+  [logFileSizes, [computeFileSizes, outputFiles]],
+
+  [computeFileSizes, [minifyFiles]],
+
+  [outputFiles, [minifyFiles, ensureDist]],
+  ensureDist,
+
+  [minifyFiles, [readFiles]],
+  [readFiles, [findFiles]],
+  findFiles
+])()

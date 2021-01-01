@@ -31,6 +31,7 @@
   },
   "license": "Apache 2.0",
   "scripts": {
+    "license": "addlicense $(git diff --name-only HEAD)",
     "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
     "lint:prettier": "pnpm run lint:prettier:base -- --write .",
     "lint:eslint:base": "eslint --ext js --ignore-path .gitignore",
@@ -76,15 +77,9 @@
     "not IE 11",
     "not op_mini all"
   ],
-  "terser": {
-    "ecma": 2015,
-    "mangle": {
-      "properties": true
-    },
-    "module": true
-  },
   "lint-staged": {
     "*.js": [
+      "addlicense",
       "pnpm run lint:prettier:base -- --write",
       "pnpm run lint:eslint:base -- --fix"
     ],
