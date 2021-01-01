@@ -1,5 +1,6 @@
 import test from 'ava'
-import { grfn } from './index.js'
+import { grfn } from './src/index.js'
+import './src/debug.js'
 
 /* eslint-disable no-empty-function */
 function a() {}

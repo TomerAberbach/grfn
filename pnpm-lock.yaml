@@ -6,7 +6,6 @@ devDependencies:
   ava: 3.14.0
   ava-fast-check: 4.0.0_ava@3.14.0+fast-check@2.10.0
   babel-eslint: 10.1.0_eslint@7.16.0
-  bundt: 1.1.2
   c8: 7.4.0
   eslint: 7.16.0
   eslint-plugin-node: 11.1.0_eslint@7.16.0
@@ -15,6 +14,7 @@ devDependencies:
   lint-staged: 10.5.3
   npm-run-all: 4.1.5
   prettier: 2.2.1
+  terser: 5.5.1
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -805,18 +805,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
-  /bundt/1.1.2:
-    dependencies:
-      kleur: 4.1.3
-      mk-dirs: 3.0.0
-      rewrite-imports: 2.0.3
-      terser: 4.8.0
-    dev: true
-    engines:
-      node: '>=6'
-    hasBin: true
-    resolution:
-      integrity: sha512-q6hkfd1v7/Xcfnblt82zGzX16+RaNJC9qATtmszMbhrJDbrir/UjxTJUCcNAXWw9JVEpoQPAB70IYpDfCXjRsg==
   /c8/7.4.0:
     dependencies:
       '@bcoe/v8-coverage': 0.2.3
@@ -2625,12 +2613,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
-  /kleur/4.1.3:
-    dev: true
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-H1tr8QP2PxFTNwAFM74Mui2b6ovcY9FoxJefgrwxY+OCJcq01k5nvhf4M/KnizzrJvLRap5STUy7dgDV35iUBw==
   /language-subtag-registry/0.3.21:
     dev: true
     resolution:
@@ -2984,12 +2966,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
-  /mk-dirs/3.0.0:
-    dev: true
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-FEZDdUFb88hgdnsfAPa4VxcPVOd+8GyZ2jsI965im5bjBlBYhrvXuTqLka/UHa6YdUNN/kZBsVgofhZ3322AJw==
   /ms/2.0.0:
     dev: true
     resolution:
@@ -3755,12 +3731,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
-  /rewrite-imports/2.0.3:
-    dev: true
-    engines:
-      node: '>=6'
-    resolution:
-      integrity: sha512-R7ICJEeP3y+d/q4C8YEJj9nRP0JyiSqG07uc0oQh8JvAe706dDFVL95GBZYCjADqmhArZWWjfM/5EcmVu4/B+g==
   /rimraf/3.0.2:
     dependencies:
       glob: 7.1.6
@@ -4174,17 +4144,17 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==
-  /terser/4.8.0:
+  /terser/5.5.1:
     dependencies:
       commander: 2.20.3
-      source-map: 0.6.1
+      source-map: 0.7.3
       source-map-support: 0.5.19
     dev: true
     engines:
-      node: '>=6.0.0'
+      node: '>=10'
     hasBin: true
     resolution:
-      integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==
+      integrity: sha512-6VGWZNVP2KTUcltUQJ25TtNjx/XgdDsBDKGt8nN0MpydU36LmbPPcMBd2kmtZNNGVVDLg44k7GKeHHj+4zPIBQ==
   /test-exclude/6.0.0:
     dependencies:
       '@istanbuljs/schema': 0.1.2
@@ -4573,7 +4543,6 @@ specifiers:
   ava: 3.14.0
   ava-fast-check: 4.0.0
   babel-eslint: 10.1.0
-  bundt: 1.1.2
   c8: 7.4.0
   eslint: 7.16.0
   eslint-plugin-node: 11.1.0
@@ -4582,3 +4551,4 @@ specifiers:
   lint-staged: 10.5.3
   npm-run-all: 4.1.5
   prettier: 2.2.1
+  terser: 5.5.1
