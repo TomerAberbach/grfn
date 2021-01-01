@@ -6,7 +6,7 @@
     "email": "tomeraberbach@gmail.com",
     "url": "https://tomeraberba.ch"
   },
-  "description": "Runs a dependency graph of async functions as concurrently as possible and threads the outputs of dependencies into dependent functions.",
+  "description": "A tiny utility that executes a dependency graph of async functions as concurrently as possible.",
   "keywords": [
     "graph",
     "dag",

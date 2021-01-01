@@ -1,6 +1,6 @@
 # grfn
 
-> Runs a dependency graph of async functions as concurrently as possible and threads the outputs of dependencies into dependent functions.
+> A tiny utility that executes a dependency graph of async functions as concurrently as possible.
 
 ## Install
 
