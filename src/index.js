@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-import { validator } from './validate.js'
+import validator from './validate.js'
 
 const createResolver = () => {
-  const resolver = {}
-
-  resolver.p = new Promise((resolve, reject) => {
-    resolver.res = resolve
-    resolver.rej = reject
+  let res; let rej
+  const prom = new Promise((resolve, reject) => {
+    res = resolve
+    rej = reject
   })
-
-  return resolver
+  return { prom, res, rej }
 }
 
-const createGraph = vertices => {
+export const grfn = vertices => {
   const graph = new Map()
   for (const vertex of vertices) {
     const [fn, dependencies = []] = [].concat(vertex)
@@ -36,27 +34,22 @@ const createGraph = vertices => {
 
   const outputFn = validator.validateGraph(graph)
 
-  return { graph, outputFn }
-}
-
-export const grfn = vertices => {
-  const { graph, outputFn } = createGraph(vertices)
-
   return (...inputs) => {
-    const resolvers = new Map(
-      Array.from(graph.keys(), fn => [fn, createResolver()])
-    )
+    const resolvers = new Map()
+    for (const fn of graph.keys()) {
+      resolvers.set(fn, createResolver())
+    }
 
     for (const [fn, dependencies] of graph.entries()) {
       Promise.all(
         dependencies.length === 0
           ? inputs
-          : dependencies.map(dependency => resolvers.get(dependency).p)
+          : dependencies.map(dependency => resolvers.get(dependency).prom)
       )
         .then(args => resolvers.get(fn).res(fn(...args)))
         .catch(error => resolvers.get(fn).rej(error))
     }
 
-    return resolvers.get(outputFn).p
+    return resolvers.get(outputFn).prom
   }
 }

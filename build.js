@@ -27,7 +27,7 @@ const terserConfig = {
   mangle: {
     properties: true
   },
-  toplevel: true,
+  module: true,
   nameCache: {}
 }
 
@@ -83,7 +83,7 @@ const logFileSizes = sizes => {
   }
 }
 
-grfn([
+const build = grfn([
   [logFileSizes, [computeFileSizes, outputFiles]],
 
   [computeFileSizes, [minifyFiles]],
@@ -94,4 +94,6 @@ grfn([
   [minifyFiles, [readFiles]],
   [readFiles, [findFiles]],
   findFiles
-])()
+])
+
+build()

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-export const validator = {
+export default {
   validateGraph: graph => {
     const leafFns = new Set(graph.keys())
 
