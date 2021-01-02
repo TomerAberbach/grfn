@@ -1,12 +1,13 @@
 {
   "type": "module",
   "name": "grfn",
+  "version": "0.0.0",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomeraberbach@gmail.com",
     "url": "https://tomeraberba.ch"
   },
-  "description": "A tiny utility that executes a dependency graph of async functions as concurrently as possible.",
+  "description": "A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.",
   "keywords": [
     "graph",
     "dag",
@@ -22,7 +23,8 @@
   ],
   "module": "./dist/index.js",
   "exports": {
-    "import": "./dist/index.js"
+    ".": "./dist/index.js",
+    "./debug": "./dist/debug.js"
   },
   "homepage": "https://github.com/TomerAberbach/grfn",
   "repository": "TomerAberbach/grfn",

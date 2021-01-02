@@ -17,7 +17,8 @@
 import validator from './validate.js'
 
 const createResolver = () => {
-  let res; let rej
+  let res
+  let rej
   const prom = new Promise((resolve, reject) => {
     res = resolve
     rej = reject
@@ -25,7 +26,7 @@ const createResolver = () => {
   return { prom, res, rej }
 }
 
-export const grfn = vertices => {
+const grfn = vertices => {
   const graph = new Map()
   for (const vertex of vertices) {
     const [fn, dependencies = []] = [].concat(vertex)
@@ -53,3 +54,5 @@ export const grfn = vertices => {
     return resolvers.get(outputFn).prom
   }
 }
+
+export default grfn

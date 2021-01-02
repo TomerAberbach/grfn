@@ -18,7 +18,8 @@ import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
 import { minify } from 'terser'
-import { grfn } from './src/index.js'
+import grfn from './src/index.js'
+import './src/debug.js'
 
 const gzip = promisify(gzipCb)
 
