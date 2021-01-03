@@ -96,6 +96,12 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "ava": {
+    "files": [
+      "./test/**/*.js",
+      "!**/helpers.js"
+    ]
+  },
   "optionalDependencies": {
     "graphviz": "0.0.9",
     "open": "7.3.0"
@@ -105,11 +111,11 @@
     "@commitlint/config-conventional": "11.0.0",
     "@tomer/eslint-config": "0.0.14",
     "@tomer/prettier-config": "0.0.2",
-    "ava": "3.14.0",
+    "ava": "3.15.0",
     "ava-fast-check": "4.0.0",
     "babel-eslint": "10.1.0",
     "c8": "7.4.0",
-    "eslint": "7.16.0",
+    "eslint": "7.17.0",
     "eslint-plugin-node": "11.1.0",
     "fast-check": "2.10.0",
     "husky": "4.3.6",
