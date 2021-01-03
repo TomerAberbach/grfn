@@ -16,12 +16,20 @@
 
   _Works in node and the browser_
 
-## Install
+- **Easy Debugging**
 
-Not published yet
+  _Cycle detection and dependency graph SVG previews in a separate `grfn/debug` module!_
+
+## Install
 
 ```sh
 $ npm i grfn
+```
+
+To use the `grfn/debug` module, install the following dev dependencies:
+
+```sh
+$ npm i -D graphviz open
 ```
 
 ## Usage

@@ -96,6 +96,10 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
+  "optionalDependencies": {
+    "graphviz": "0.0.9",
+    "open": "7.3.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
@@ -115,6 +119,6 @@
     "terser": "5.5.1"
   },
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 7.6.0"
   }
 }

@@ -14,7 +14,10 @@
  * limitations under the License.
  */
 
+import graphviz from 'graphviz'
+import open from 'open'
 import validator from './validate.js'
+import grfn from './index.js'
 
 const assert = (condition, message) => {
   if (!condition) {
@@ -63,4 +66,41 @@ validator.validateGraph = graph => {
   assert(leafFns.size === 1, () => `1 output fn: ${leafFns.size}`)
 
   return leafFns.values().next().value
+}
+
+grfn.preview = async vertices => {
+  const graph = new Map()
+  for (const vertex of vertices) {
+    const [fn, dependencies = []] = [].concat(vertex)
+    graph.set(fn, dependencies)
+  }
+
+  validator.validateGraph(graph)
+
+  const digraph = graphviz.digraph(`G`)
+  digraph.setNodeAttribut(`fontname`, `monospace`)
+
+  for (const fn of graph.keys()) {
+    digraph.addNode(fn.name)
+  }
+
+  for (const [fn, dependencies] of graph.entries()) {
+    for (const dependency of dependencies) {
+      digraph.addEdge(dependency.name, fn.name)
+    }
+  }
+
+  const svg = await new Promise((resolve, reject) =>
+    digraph.render(`svg`, resolve, reject)
+  )
+
+  const html = Buffer.concat([
+    Buffer.from(
+      `<head><title>grfn</title></head><body style="display: grid; place-items: center; min-height: 100%; margin: 0;">`
+    ),
+    svg,
+    Buffer.from(`</body>`)
+  ]).toString(`base64`)
+
+  await open(`data:text/html;base64,${html}`)
 }

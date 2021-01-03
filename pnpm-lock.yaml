@@ -16,6 +16,9 @@ devDependencies:
   prettier: 2.2.1
   terser: 5.5.1
 lockfileVersion: 5.2
+optionalDependencies:
+  graphviz: 0.0.9
+  open: 7.3.0
 packages:
   /@babel/code-frame/7.12.11:
     dependencies:
@@ -2108,6 +2111,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
+  /graphviz/0.0.9:
+    dependencies:
+      temp: 0.4.0
+    dev: false
+    engines:
+      node: '>=0.6.8'
+    optional: true
+    resolution:
+      integrity: sha512-SmoY2pOtcikmMCqCSy2NO1YsRfu9OO0wpTlOYW++giGjfX1a6gax/m1Fo8IdUd0/3H15cTOfR1SMKwohj4LKsg==
   /hard-rejection/2.1.0:
     dev: true
     engines:
@@ -2334,6 +2346,14 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-USlDT524woQ08aoZFzh3/Z6ch9Y/EWXEHQ/AaRN0SkKq4t2Jw2R2339tSXmwuVoY7LLlBCbOIlx2myP/L5zk0g==
+  /is-docker/2.1.1:
+    dev: false
+    engines:
+      node: '>=8'
+    hasBin: true
+    optional: true
+    resolution:
+      integrity: sha512-ZOoqiXfEwtGknTiuDEy8pN2CfE3TxMHprvNer1mXiqwkOT77Rw3YVrUQ52EqAOU3QAWDQ+bQdx7HJzrv7LS2Hw==
   /is-error/2.2.2:
     dev: true
     resolution:
@@ -2489,6 +2509,15 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==
+  /is-wsl/2.2.0:
+    dependencies:
+      is-docker: 2.1.1
+    dev: false
+    engines:
+      node: '>=8'
+    optional: true
+    resolution:
+      integrity: sha512-fKzAra0rGJUUBwGBgNkHZuToZcn+TtXHpeCgmkMJMMYx1sQDYaCSyjJBSCa2nH1DGm7s3n1oBnohoVTBaN7Lww==
   /is-yarn-global/0.3.0:
     dev: true
     resolution:
@@ -3121,6 +3150,16 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==
+  /open/7.3.0:
+    dependencies:
+      is-docker: 2.1.1
+      is-wsl: 2.2.0
+    dev: false
+    engines:
+      node: '>=8'
+    optional: true
+    resolution:
+      integrity: sha512-mgLwQIx2F/ye9SmbrUkurZCnkoXyXyu9EbHtJZrICjVAJfyMArdHp3KkixGdZx1ZHFPNIwl0DDM1dFFqXbTLZw==
   /opencollective-postinstall/2.0.3:
     dev: true
     hasBin: true
@@ -4138,6 +4177,13 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==
+  /temp/0.4.0:
+    dev: false
+    engines:
+      '0': node >=0.4.0
+    optional: true
+    resolution:
+      integrity: sha1-ZxrWPVe+D+nXKUZks/xABjZnimA=
   /term-size/2.2.1:
     dev: true
     engines:
@@ -4547,8 +4593,10 @@ specifiers:
   eslint: 7.16.0
   eslint-plugin-node: 11.1.0
   fast-check: 2.10.0
+  graphviz: 0.0.9
   husky: 4.3.6
   lint-staged: 10.5.3
   npm-run-all: 4.1.5
+  open: 7.3.0
   prettier: 2.2.1
   terser: 5.5.1
