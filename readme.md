@@ -4,17 +4,10 @@
 
 ## Features
 
-- **Lightweight**<br>
-  _Less than 400 bytes gzipped_
-
-- **Unobtrusive and Unopiniated**<br>
-  _Write your functions your way, and get a function back!_
-
-- **Isomorphic**<br>
-  _Works in node and the browser_
-
-- **Easy Debugging**<br>
-  _Cycle detection and dependency graph SVG previews in a separate `grfn/debug` module!_
+- **Lightweight:** less than 400 bytes gzipped
+- **Unobtrusive and Unopiniated:** write your functions your way, and get a function back!
+- **Isomorphic:** works in node and the browser
+- **Easy Debugging:** cycle detection and dependency graph SVG previews from a separate `grfn/debug` module!
 
 ## Install
 
