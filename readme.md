@@ -30,7 +30,21 @@ import grfn from './src/index.js'
 import './src/debug.js'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
-const withLogging = fn => ...
+const withLogging = fn =>
+  Object.defineProperty(
+    async (...args) => {
+      console.log(`${fn.name} input: ${args.join(`, `)}`)
+      const output = await fn(...args)
+      console.log(`${fn.name} output: ${output}`)
+      return output
+    },
+    `name`,
+    {
+      enumerable: false,
+      writable: false,
+      value: fn.name
+    }
+  )
 
 const taskA = withLogging(async function taskA(n1, n2, n3) {
   await delay(10)
