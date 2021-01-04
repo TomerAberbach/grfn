@@ -21,10 +21,17 @@
   "files": [
     "./dist"
   ],
-  "module": "./dist/index.js",
+  "module": "./dist/esm/index.js",
+  "main": "./dist/cjs/index.js",
   "exports": {
-    ".": "./dist/index.js",
-    "./debug": "./dist/debug.js"
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./debug": {
+      "import": "./dist/esm/debug.js",
+      "require": "./dist/cjs/debug.js"
+    }
   },
   "homepage": "https://github.com/TomerAberbach/grfn",
   "repository": "TomerAberbach/grfn",
@@ -107,6 +114,8 @@
     "open": "7.3.0"
   },
   "devDependencies": {
+    "@babel/core": "7.12.10",
+    "@babel/plugin-transform-modules-commonjs": "7.12.1",
     "@commitlint/cli": "11.0.0",
     "@commitlint/config-conventional": "11.0.0",
     "@tomer/eslint-config": "0.0.14",
@@ -114,6 +123,7 @@
     "ava": "3.15.0",
     "ava-fast-check": "4.0.0",
     "babel-eslint": "10.1.0",
+    "babel-plugin-add-module-exports": "1.0.4",
     "c8": "7.4.0",
     "eslint": "7.17.0",
     "eslint-plugin-node": "11.1.0",

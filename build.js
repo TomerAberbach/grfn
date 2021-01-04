@@ -18,6 +18,7 @@ import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
 import { minify } from 'terser'
+import { transformAsync } from '@babel/core'
 import grfn from './src/index.js'
 import './src/debug.js'
 
@@ -36,7 +37,10 @@ const mapAsync = (array, fn) => array.map(async value => fn(await value))
 
 const ensureDist = async () => {
   try {
-    await fs.mkdir(`./dist`)
+    await Promise.all([
+      fs.mkdir(`./dist/esm`, { recursive: true }),
+      fs.mkdir(`./dist/cjs`, { recursive: true })
+    ])
   } catch (error) {
     if (error.code !== `EEXIST`) {
       throw error
@@ -51,6 +55,36 @@ const readFiles = names =>
     name,
     code: (await fs.readFile(`./src/${name}`)).toString(`utf8`)
   }))
+
+const createCjsFromFiles = files =>
+  mapAsync(files, ({ name, code }) => ({
+    name: `esm/${name}`,
+    code
+  })).concat(
+    mapAsync(files, async ({ name, code }) => ({
+      name: `cjs/${name}`,
+      code: (
+        await transformAsync(code, {
+          plugins: [
+            [
+              `@babel/transform-modules-commonjs`,
+              {
+                loose: true,
+                strict: true,
+                noInterop: true
+              }
+            ],
+            [
+              `add-module-exports`,
+              {
+                addDefaultProperty: true
+              }
+            ]
+          ]
+        })
+      ).code
+    }))
+  )
 
 const minifyFiles = files =>
   mapAsync(files, async ({ name, code }) => ({
@@ -92,7 +126,8 @@ const build = grfn([
   [outputFiles, [minifyFiles, ensureDist]],
   ensureDist,
 
-  [minifyFiles, [readFiles]],
+  [minifyFiles, [createCjsFromFiles]],
+  [createCjsFromFiles, [readFiles]],
   [readFiles, [findFiles]],
   findFiles
 ])
