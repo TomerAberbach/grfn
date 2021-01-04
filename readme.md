@@ -97,11 +97,15 @@ const runTasks = grfn([
   taskB
 ])
 
-runTasks(1, 2, 3).then(output => {
+const main = async () => {
+  const output = await runTasks(1, 2, 3)
+
   // This will be the output of `taskF`
   // because no function depends on it!
   console.log(`final output: ${output}`)
-})
+}
+
+main()
 ```
 
 Output:
@@ -139,13 +143,34 @@ grfn.preview([
 ])
 ```
 
-Opened in the browser:
+Opens the following SVG in the browser:
 
 ![](preview.png)
 
 ## API
 
-TODO
+### `grfn(vertices) -> fn`
+
+#### `vertices`
+
+An array describing a dependency graph of functions.
+
+Each value (`vertext`) in `vertices` must be either:
+
+- A pair containing a function and its array of function dependencies (e.g. `[fnA, [fnB, fnC]]`)
+- Or a function (equivalent to `[fn, []]`)
+
+The following constraints, which are verified when `grfn/debug` is imported before calling `grfn`, must also be met:
+
+- Each dependency in `vertices` must also appear as a non-dependency:
+  - Not okay: `grfn([[fnA, [fnB]]])` (`fnB` doesn't appear as a non-dependency)
+  - Okay: `grfn([[fnA, [fnB]], fnB])`
+- `vertices` must describe an [acyclic](https://en.wikipedia.org/wiki/Directed_acyclic_graph) dependency graph:
+  - Not okay: `grfn([[fnA, [fnB]], [fnB, [fnA]]])` (cycle: `fnA -> fnB -> fnA`)
+  - Okay: `grfn([[fnA, [fnB]], fnB])`
+- `vertices` must have exactly one _output function_, a function that is not depended on by any function:
+  - Not okay: `grfn([[fnB, [fnA]], [fnC, [fnA]], fnA])` (both `fnB` and `fnC` are not depended on by any function)
+  - Okay: `grfn([[fnD, [fnB, fnC]], [fnB, [fnA]], [fnC, [fnA]], fnA])`
 
 ## Contributing
 
