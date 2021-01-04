@@ -9,6 +9,14 @@
 - **Isomorphic:** works in node and the browser
 - **Easy Debugging:** provides cycle detection and SVG dependency graph previews through a `grfn/debug` module!
 
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [API](#api)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Install
 
 ```sh
@@ -134,6 +142,10 @@ grfn.preview([
 Opened in the browser:
 
 ![](preview.png)
+
+## API
+
+TODO
 
 ## Contributing
 
