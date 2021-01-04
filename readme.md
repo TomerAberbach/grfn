@@ -7,7 +7,7 @@
 - **Lightweight:** less than 400 bytes gzipped
 - **Unobtrusive and Unopiniated:** takes normal functions; returns a normal function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides cycle detection and dependency graph SVG previews through a `grfn/debug` module!
+- **Easy Debugging:** provides cycle detection and SVG dependency graph previews through a `grfn/debug` module!
 
 ## Install
 
