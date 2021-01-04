@@ -34,7 +34,7 @@
       "require": "./dist/cjs/debug.js"
     }
   },
-  "typings": "./src/index.d.ts",
+  "types": "./src/index.d.ts",
   "homepage": "https://github.com/TomerAberbach/grfn",
   "repository": "TomerAberbach/grfn",
   "bugs": {
