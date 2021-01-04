@@ -164,15 +164,23 @@ The following constraints, which are verified when `grfn/debug` is imported befo
 
 - Each dependency in `vertices` must also appear as a non-dependency:
   - Not okay (`fnB` doesn't appear as a non-dependency):
+    <!-- prettier-ignore -->
     ```js
-    grfn([[fnA, [fnB]]])
+    grfn([
+      [fnA, [fnB]]
+    ])
     ```
   - Okay:
+    <!-- prettier-ignore -->
     ```js
-    grfn([[fnA, [fnB]], fnB])
+    grfn([
+      [fnA, [fnB]],
+      fnB
+    ])
     ```
 - `vertices` must describe an [acyclic](https://en.wikipedia.org/wiki/Directed_acyclic_graph) dependency graph:
   - Not okay (cycle: `fnA -> fnB -> fnA`):
+    <!-- prettier-ignore -->
     ```js
     grfn([
       [fnA, [fnB]],
@@ -180,17 +188,32 @@ The following constraints, which are verified when `grfn/debug` is imported befo
     ])
     ```
   - Okay:
+    <!-- prettier-ignore -->
     ```js
-    grfn([[fnA, [fnB]], fnB])
+    grfn([
+      [fnA, [fnB]],
+      fnB
+    ])
     ```
 - `vertices` must have exactly one _output function_, a function that is not depended on by any function:
   - Not okay (both `fnB` and `fnC` are not depended on by any function):
+    <!-- prettier-ignore -->
     ```js
-    grfn([[fnB, [fnA]], [fnC, [fnA]], fnA])
+    grfn([
+      [fnB, [fnA]],
+      [fnC, [fnA]],
+      fnA
+    ])
     ```
   - Okay:
+    <!-- prettier-ignore -->
     ```js
-    grfn([[fnD, [fnB, fnC]], [fnB, [fnA]], [fnC, [fnA]], fnA])
+    grfn([
+      [fnD, [fnB, fnC]],
+      [fnB, [fnA]],
+      [fnC, [fnA]],
+      fnA
+    ])
     ```
 
 ## Contributing
