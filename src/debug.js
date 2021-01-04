@@ -75,7 +75,12 @@ grfn.preview = async vertices => {
     graph.set(fn, dependencies)
   }
 
-  validator.validateGraph(graph)
+  try {
+    validator.validateGraph(graph)
+  } catch (error) {
+    console.log(`attempting to preview graph despite error:`)
+    console.error(error.message)
+  }
 
   const digraph = graphviz.digraph(`G`)
   digraph.setNodeAttribut(`fontname`, `monospace`)
