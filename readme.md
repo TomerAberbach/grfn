@@ -21,6 +21,8 @@ To use the `grfn/debug` module, install the following dev dependencies:
 $ npm i -D graphviz open
 ```
 
+For the [`graphviz`](https://www.npmjs.com/package/graphviz) package to work, you'll need to install [GraphViz for your operating system](http://www.graphviz.org/download#executable-packages).
+
 ## Usage
 
 TODO
