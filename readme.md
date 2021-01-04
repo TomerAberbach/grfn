@@ -72,8 +72,8 @@ const taskF = withLogging(async function taskF(a, c, d) {
 })
 
 const runTasks = grfn([
-  // `taskD` depends on `taskA`, `taskC`, and `taskD`
-  // Call `taskD` with the results of the functions
+  // `taskF` depends on `taskA`, `taskC`, and `taskD`
+  // Call `taskF` with the results of the functions
   // once their returned promises resolve
   [taskF, [taskA, taskC, taskD]],
 
