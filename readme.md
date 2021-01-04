@@ -25,6 +25,10 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) package to work, yo
 
 ## Usage
 
+Check out this [package's build file](https://github.com/TomerAberbach/grfn/blob/main/build.js) for a real world usage example!
+
+A illustrative example:
+
 ```js
 import grfn from 'grfn'
 
