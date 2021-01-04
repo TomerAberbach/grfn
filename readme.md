@@ -163,8 +163,14 @@ Each value (`vertext`) in `vertices` must be either:
 The following constraints, which are verified when `grfn/debug` is imported before calling `grfn`, must also be met:
 
 - Each dependency in `vertices` must also appear as a non-dependency:
-  - Not okay: `grfn([[fnA, [fnB]]])` (`fnB` doesn't appear as a non-dependency)
-  - Okay: `grfn([[fnA, [fnB]], fnB])`
+  - Not okay (`fnB` doesn't appear as a non-dependency):
+    ```js
+    grfn([[fnA, [fnB]]])
+    ```
+  - Okay:
+    ```js
+    grfn([[fnA, [fnB]], fnB])
+    ```
 - `vertices` must describe an [acyclic](https://en.wikipedia.org/wiki/Directed_acyclic_graph) dependency graph:
   - Not okay: `grfn([[fnA, [fnB]], [fnB, [fnA]]])` (cycle: `fnA -> fnB -> fnA`)
   - Okay: `grfn([[fnA, [fnB]], fnB])`
