@@ -120,6 +120,8 @@ import 'grfn/debug'
 
 // ...
 
+// The `preview` property is only available
+// in node when `grfn/debug` has been imported
 grfn.preview([
   [taskF, [taskA, taskC, taskD]],
   [taskD, [taskB]],
