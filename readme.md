@@ -153,6 +153,8 @@ Opens the following SVG in the browser:
 
 #### `vertices`
 
+Type: `(Function | [Function, Function[]])[]`
+
 An array describing a dependency graph of functions.
 
 Each value (`vertext`) in `vertices` must be either:
@@ -215,6 +217,16 @@ The following constraints, which are verified when `grfn/debug` is imported befo
       fnA
     ])
     ```
+
+#### `fn`
+
+Type: `(...args) => Promise`
+
+### `grfn.preview(vertices) -> Promise<void>`
+
+### `vertices`
+
+Type: `(Function | [Function, Function[]])[]`
 
 ## Contributing
 
