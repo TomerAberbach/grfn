@@ -108,6 +108,8 @@ taskF output: 864
 final output: 864
 ```
 
+### Debugging
+
 ```js
 import grfn from 'grfn'
 import 'grfn/debug'
@@ -124,6 +126,7 @@ grfn.preview([
 ```
 
 Opened in the browser:
+
 ![](preview.png)
 
 ## Contributing
