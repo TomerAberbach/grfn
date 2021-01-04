@@ -26,8 +26,7 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) package to work, yo
 ## Usage
 
 ```js
-import grfn from './src/index.js'
-import './src/debug.js'
+import grfn from 'grfn'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 const withLogging = fn =>
@@ -108,6 +107,24 @@ taskF input: 6, 12, 12
 taskF output: 864
 final output: 864
 ```
+
+```js
+import grfn from 'grfn'
+import 'grfn/debug'
+
+// ...
+
+grfn.preview([
+  [taskF, [taskA, taskC, taskD]],
+  [taskD, [taskB]],
+  [taskC, [taskA, taskB]],
+  taskA,
+  taskB
+])
+```
+
+Opened in the browser:
+![](preview.png)
 
 ## Contributing
 
