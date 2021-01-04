@@ -30,9 +30,7 @@ import grfn from './src/index.js'
 import './src/debug.js'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
-const withLogging = fn => {
-  /* ... */
-}
+const withLogging = fn => ...
 
 const taskA = withLogging(async function taskA(n1, n2, n3) {
   await delay(10)
@@ -75,7 +73,7 @@ const runTasks = grfn([
 ])
 
 runTasks(1, 2, 3).then(output => {
-  // This will be the output of `taskD`
+  // This will be the output of `taskF`
   // because no function depends on it!
   console.log(`final output: ${output}`)
 })
