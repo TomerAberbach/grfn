@@ -172,11 +172,26 @@ The following constraints, which are verified when `grfn/debug` is imported befo
     grfn([[fnA, [fnB]], fnB])
     ```
 - `vertices` must describe an [acyclic](https://en.wikipedia.org/wiki/Directed_acyclic_graph) dependency graph:
-  - Not okay: `grfn([[fnA, [fnB]], [fnB, [fnA]]])` (cycle: `fnA -> fnB -> fnA`)
-  - Okay: `grfn([[fnA, [fnB]], fnB])`
+  - Not okay (cycle: `fnA -> fnB -> fnA`):
+    ```js
+    grfn([
+      [fnA, [fnB]],
+      [fnB, [fnA]]
+    ])
+    ```
+  - Okay:
+    ```js
+    grfn([[fnA, [fnB]], fnB])
+    ```
 - `vertices` must have exactly one _output function_, a function that is not depended on by any function:
-  - Not okay: `grfn([[fnB, [fnA]], [fnC, [fnA]], fnA])` (both `fnB` and `fnC` are not depended on by any function)
-  - Okay: `grfn([[fnD, [fnB, fnC]], [fnB, [fnA]], [fnC, [fnA]], fnA])`
+  - Not okay (both `fnB` and `fnC` are not depended on by any function):
+    ```js
+    grfn([[fnB, [fnA]], [fnC, [fnA]], fnA])
+    ```
+  - Okay:
+    ```js
+    grfn([[fnD, [fnB, fnC]], [fnB, [fnA]], [fnC, [fnA]], fnA])
+    ```
 
 ## Contributing
 
