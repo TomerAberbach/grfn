@@ -91,7 +91,7 @@ const runTasks = grfn([
   [taskD, [taskB]], // `taskD` depends on `taskB`
   [taskC, [taskA, taskB]], // `taskC` depends on `taskA` and `taskB`
 
-  // `taskA` and `taskB` have no dependencies!
+  // `taskA` and `taskB` have no dependencies! (But they must still be listed)
   // They take the input given to `runTasks`
   taskA,
   taskB
