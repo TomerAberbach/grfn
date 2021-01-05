@@ -58,12 +58,12 @@ const withLogging = fn =>
   )
 
 const taskA = withLogging(async function taskA(n1, n2, n3) {
-  await delay(10)
+  await delay(15)
   return n1 + n2 + n3
 })
 
 const taskB = withLogging(async function taskB(n1, n2, n3) {
-  await delay(15)
+  await delay(10)
   return n1 * n2 * n3
 })
 
@@ -113,11 +113,11 @@ Output:
 ```
 taskA input: 1, 2, 3
 taskB input: 1, 2, 3
-taskA output: 6
 taskB output: 6
 taskD input: 6
-taskC input: 6, 6
 taskD output: 12
+taskA output: 6
+taskC input: 6, 6
 taskC output: 12
 taskF input: 6, 12, 12
 taskF output: 864
