@@ -149,7 +149,12 @@ Opens the following SVG in the browser:
 
 ## API
 
-### `grfn(vertices) -> fn`
+### `grfn(vertices) => (...args) => Promise`
+
+Returns a function that runs the dependency graph of functions described by `vertices`:
+
+- Input: passed to the functions that don't have dependencies in the graph
+- Output: a `Promise` that resolves to the value returned from the graph's _output function_, the function that is not depended on by any function
 
 #### `vertices`
 
@@ -157,7 +162,7 @@ Type: `(Function | [Function, Function[]])[]`
 
 An array describing a dependency graph of functions.
 
-Each value (`vertext`) in `vertices` must be either:
+Each value in `vertices` must be either:
 
 - A pair containing a function and its array of function dependencies (e.g. `[fnA, [fnB, fnC]]`)
 - Or a function (equivalent to `[fn, []]`)
@@ -218,15 +223,17 @@ The following constraints, which are verified when `grfn/debug` is imported befo
     ])
     ```
 
-#### `fn`
+### `grfn.preview(vertices) => Promise<void>`
 
-Type: `(...args) => Promise`
+Only available in node after `grfn/debug` is imported.
 
-### `grfn.preview(vertices) -> Promise<void>`
+Generates an SVG of the dependency graph described by `vertices` and returns a `Promise` that resolves when the SVG is opened in the browser (it uses a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) so the SVG is not uploaded anywhere).
 
 ### `vertices`
 
 Type: `(Function | [Function, Function[]])[]`
+
+Same as `grfn`'s [`vertices`](#vertices) parameter except `grfn.preview` will attempt to generate the SVG even if the given `vertices` do not meet the constraints (to aid in debugging).
 
 ## Contributing
 
