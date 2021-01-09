@@ -175,6 +175,8 @@ The buffer contains the following GIF:
 
 <img src="animation.gif" width="350">
 
+Note that `gifRun` actually runs the dependency graph in order to generate the GIF.
+
 ## API
 
 ### `grfn(vertices) => (...args) => Promise`
@@ -253,7 +255,7 @@ The following constraints, which are verified when `grfn/debug` is imported befo
 
 ### `grfn.preview(vertices) => Promise<void>`
 
-Only available in node after `grfn/debug` is imported.
+Only available in node after `grfn/debug/node` is imported.
 
 Generates an SVG of the dependency graph described by `vertices` and returns a `Promise` that resolves when the SVG is opened in the browser (it uses a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) so the SVG is not uploaded anywhere).
 
@@ -262,6 +264,24 @@ Generates an SVG of the dependency graph described by `vertices` and returns a `
 Type: `(Function | [Function, Function[]])[]`
 
 Same as `grfn`'s [`vertices`](#vertices) parameter except `grfn.preview` will attempt to generate the SVG even if the given `vertices` do not meet the constraints (to aid in debugging).
+
+### `grfn.gifRun({ vertices, input }) => Promise<Buffer>`
+
+Only available in node after `grfn/debug/node` is imported.
+
+Runs the dependency graph described by `vertices` with the given `input` and generates a GIF of the run. Returns a `Promise` that resolves to a `Buffer` containing the GIF.
+
+### `vertices`
+
+Type: `(Function | [Function, Function[]])[]`
+
+Same as `grfn`'s [`vertices`](#vertices) parameter.
+
+### `input`
+
+Type: `Array`
+
+Parameters to run the dependency graph with.
 
 ## Contributing
 
