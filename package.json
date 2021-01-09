@@ -32,6 +32,10 @@
     "./debug": {
       "import": "./dist/esm/debug.js",
       "require": "./dist/cjs/debug.js"
+    },
+    "./debug/node": {
+      "import": "./dist/esm/node-debug.js",
+      "require": "./dist/cjs/node-debug.js"
     }
   },
   "types": "./src/index.d.ts",
@@ -113,7 +117,9 @@
   },
   "optionalDependencies": {
     "graphviz": "0.0.9",
-    "open": "7.3.0"
+    "open": "7.3.0",
+    "gifencoder": "2.0.1",
+    "png-js": "1.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -137,6 +143,6 @@
     "terser": "5.5.1"
   },
   "engines": {
-    "node": ">= 7.6.0"
+    "node": ">= 10.0.0"
   }
 }

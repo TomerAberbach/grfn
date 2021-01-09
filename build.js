@@ -48,7 +48,8 @@ const ensureDist = async () => {
   }
 }
 
-const findFiles = () => fs.readdir(`./src`)
+const findFiles = async () =>
+  (await fs.readdir(`./src`)).filter(name => name.endsWith(`.js`))
 
 const readFiles = names =>
   names.map(async name => ({

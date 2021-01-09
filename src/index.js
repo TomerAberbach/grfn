@@ -30,7 +30,7 @@ const grfn = vertices => {
   const graph = new Map()
   for (const vertex of vertices) {
     const [fn, dependencies = []] = [].concat(vertex)
-    graph.set(fn, dependencies)
+    graph.set(fn, [...dependencies])
   }
 
   const outputFn = validator.validateGraph(graph)

@@ -7,7 +7,7 @@
 - **Lightweight:** less than 400 bytes gzipped
 - **Unobtrusive and Unopiniated:** takes normal functions; returns a normal function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides cycle detection and SVG dependency graph previews through a `grfn/debug` module!
+- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as SVG and GIF dependency graph previews through a `grfn/debug/node` module!
 
 ## Table of Contents
 
@@ -23,10 +23,10 @@
 $ npm i grfn
 ```
 
-To use the `grfn/debug` module, install the following dev dependencies:
+To use the `grfn/debug/node` module, install the following dev dependencies:
 
 ```sh
-$ npm i -D graphviz open
+$ npm i -D graphviz open gifencoder png-js
 ```
 
 For the [`graphviz`](https://www.npmjs.com/package/graphviz) package to work, you'll need to install [GraphViz for your operating system](http://www.graphviz.org/download#executable-packages).
@@ -77,16 +77,16 @@ const taskD = withLogging(async function taskD(b) {
   return b * 2
 })
 
-const taskF = withLogging(async function taskF(a, c, d) {
+const taskE = withLogging(async function taskE(a, c, d) {
   await delay(10)
   return a * c * d
 })
 
 const runTasks = grfn([
-  // `taskF` depends on `taskA`, `taskC`, and `taskD`
-  // Call `taskF` with the results of the functions
+  // `taskE` depends on `taskA`, `taskC`, and `taskD`
+  // Call `taskE` with the results of the functions
   // once their returned promises resolve
-  [taskF, [taskA, taskC, taskD]],
+  [taskE, [taskA, taskC, taskD]],
 
   [taskD, [taskB]], // `taskD` depends on `taskB`
   [taskC, [taskA, taskB]], // `taskC` depends on `taskA` and `taskB`
@@ -97,43 +97,47 @@ const runTasks = grfn([
   taskB
 ])
 
-const main = async () => {
-  const output = await runTasks(1, 2, 3)
+const output = await runTasks(4, 2, 3)
 
-  // This will be the output of `taskF`
-  // because no function depends on it!
-  console.log(`final output: ${output}`)
-}
-
-main()
+// This will be the output of `taskE`
+// because no function depends on it!
+console.log(`final output: ${output}`)
 ```
 
 Output:
 
 ```
-taskA input: 1, 2, 3
-taskB input: 1, 2, 3
-taskB output: 6
-taskD input: 6
-taskD output: 12
-taskA output: 6
-taskC input: 6, 6
-taskC output: 12
-taskF input: 6, 12, 12
-taskF output: 864
-final output: 864
+taskA input: 4, 2, 3
+taskB input: 4, 2, 3
+taskB output: 24
+taskD input: 24
+taskD output: 48
+taskA output: 9
+taskC input: 9, 24
+taskC output: 33
+taskE input: 9, 33, 48
+taskE output: 14256
 ```
 
 ### Debugging
 
+To enable cycle detection import `grfn/debug` in addition to `grfn`:
+
 ```js
 import grfn from 'grfn'
 import 'grfn/debug'
+```
+
+To generate SVGs and GIFs in node import `grfn/debug/node` in addition to `grfn` (note that `grfn/debug/node` imports `grfn/debug`):
+
+```js
+import grfn from 'grfn'
+import 'grfn/debug/node'
 
 // ...
 
 // The `preview` property is only available
-// in node when `grfn/debug` has been imported
+// in node when `grfn/debug/node` has been imported
 grfn.preview([
   [taskF, [taskA, taskC, taskD]],
   [taskD, [taskB]],
@@ -141,11 +145,24 @@ grfn.preview([
   taskA,
   taskB
 ])
+
+// The `gifRun` property is only available
+// in node when `grfn/debug/node` has been imported
+const buffer = await grfn.gifRun({
+  vertices: [
+    [taskF, [taskA, taskC, taskD]],
+    [taskD, [taskB]],
+    [taskC, [taskA, taskB]],
+    taskA,
+    taskB
+  ],
+  input: [4, 2, 3]
+})
 ```
 
-Opens the following SVG in the browser:
-
 ![](preview.png)
+
+![](animation.gif)
 
 ## API
 
