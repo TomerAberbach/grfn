@@ -160,9 +160,9 @@ const buffer = await grfn.gifRun({
 })
 ```
 
-![](preview.png)
+![](preview.png | width=100)
 
-![](animation.gif)
+![](animation.gif | width=100)
 
 ## API
 
