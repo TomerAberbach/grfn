@@ -145,6 +145,17 @@ grfn.preview([
   taskA,
   taskB
 ])
+```
+
+Opens the following SVG in the browser:
+
+<img src="preview.png" width="350">
+
+```js
+import grfn from 'grfn'
+import 'grfn/debug/node'
+
+// ...
 
 // The `gifRun` property is only available
 // in node when `grfn/debug/node` has been imported
@@ -160,7 +171,8 @@ const buffer = await grfn.gifRun({
 })
 ```
 
-<img src="preview.png" width="350">
+The buffer contains the following GIF:
+
 <img src="animation.gif" width="350">
 
 ## API
