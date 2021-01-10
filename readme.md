@@ -29,7 +29,7 @@ $ npm i grfn
 
 Check out `grfn`'s very own [build file](https://github.com/TomerAberbach/grfn/blob/main/build.js) for a real world usage example!
 
-A illustrative example:
+An illustrative example:
 
 ```js
 import grfn from 'grfn'
