@@ -2,6 +2,9 @@
 
 > A snazzy utility for generating SVGs and GIFs from grfn dependency graphs.
 
+<img src="../../animation.gif" width="350" align="right">
+<img src="../../preview.png" width="350" align="right">
+
 ## Install
 
 ```sh
