@@ -78,7 +78,8 @@
       {
         "files": [
           "build.js",
-          "test.js"
+          "playground.js",
+          "**/test/**/*.js"
         ],
         "rules": {
           "node/no-unsupported-features/es-builtins": "off",
@@ -143,6 +144,6 @@
     "terser": "5.5.1"
   },
   "engines": {
-    "node": ">= 10.0.0"
+    "node": ">= 6.0.0"
   }
 }

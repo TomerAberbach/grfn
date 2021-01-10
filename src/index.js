@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import validator from './validate.js'
+import validator from './v.js'
 
 const createResolver = () => {
   let res
@@ -35,7 +35,7 @@ const grfn = vertices => {
 
   const outputFn = validator.validateGraph(graph)
 
-  return (...inputs) => {
+  const returnedFn = (...inputs) => {
     const resolvers = new Map()
     for (const fn of graph.keys()) {
       resolvers.set(fn, createResolver())
@@ -53,6 +53,9 @@ const grfn = vertices => {
 
     return resolvers.get(outputFn).prom
   }
+
+  returnedFn.gr = graph
+  return returnedFn
 }
 
 export default grfn

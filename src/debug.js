@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import validator from './validate.js'
+import validator from './v.js'
 
 const assert = (condition, message) => {
   if (!condition) {

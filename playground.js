@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import { promises as fs } from 'fs'
 import grfn from './src/index.js'
-import './src/node-debug.js'
+import './src/debug.js'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 const withLogging = fn =>
@@ -62,21 +61,25 @@ const taskE = withLogging(async function taskE(a, c, d) {
 })
 /* eslint-enable */
 
-grfn
-  .gifRun({
-    vertices: [
-      [taskE, [taskA, taskC, taskD]],
-      [taskD, [taskB]],
-      [taskC, [taskA, taskB]],
-      taskA,
-      taskB
-    ],
-    input: [4, 2, 3]
-  })
-  .then(buffer => fs.writeFile(`animation.gif`, buffer))
+grfn([
+  [taskE, [taskA, taskC, taskD]],
+  [taskD, [taskB]],
+  [taskC, [taskA, taskB]],
+  taskA,
+  taskB
+])
 
 /*
- * Const taskA = (n1, n2, n3) => delay(15).then(() => n1 + n2 + n3)
+ * Grfn
+ *   .gifRun({
+ *     vertices: ,
+ *     input: [4, 2, 3]
+ *   })
+ *   .then(buffer => fs.writeFile(`animation.gif`, buffer))
+ */
+
+/*
+ * const taskA = (n1, n2, n3) => delay(15).then(() => n1 + n2 + n3)
  * const taskB = (n1, n2, n3) => delay(10).then(() => n1 * n2 * n3)
  * const taskC = (a, b) => delay(5).then(() => a + b)
  * const taskD = b => delay(1).then(() => b * 2)

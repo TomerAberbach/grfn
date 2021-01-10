@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import { join, dirname, basename } from 'path'
 import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
@@ -27,7 +28,10 @@ const gzip = promisify(gzipCb)
 const terserConfig = {
   ecma: 2015,
   mangle: {
-    properties: true
+    properties: {
+      // eslint-disable-next-line camelcase
+      keep_quoted: true
+    }
   },
   module: true,
   nameCache: {}
@@ -35,11 +39,11 @@ const terserConfig = {
 
 const mapAsync = (array, fn) => array.map(async value => fn(await value))
 
-const ensureDist = async () => {
+const ensureDist = async base => {
   try {
     await Promise.all([
-      fs.mkdir(`./dist/esm`, { recursive: true }),
-      fs.mkdir(`./dist/cjs`, { recursive: true })
+      fs.mkdir(join(base, `dist/esm`), { recursive: true }),
+      fs.mkdir(join(base, `dist/cjs`), { recursive: true })
     ])
   } catch (error) {
     if (error.code !== `EEXIST`) {
@@ -48,21 +52,26 @@ const ensureDist = async () => {
   }
 }
 
-const findFiles = async () =>
-  (await fs.readdir(`./src`)).filter(name => name.endsWith(`.js`))
+const findFiles = async base =>
+  (await fs.readdir(join(base, `src`)))
+    .filter(name => name.endsWith(`.js`))
+    .map(name => join(base, `src`, name))
 
-const readFiles = names =>
-  names.map(async name => ({
-    name,
-    code: (await fs.readFile(`./src/${name}`)).toString(`utf8`)
+const readFiles = filenames =>
+  filenames.map(async filename => ({
+    base: dirname(dirname(filename)),
+    name: basename(filename),
+    code: (await fs.readFile(filename)).toString(`utf8`)
   }))
 
 const createCjsFromFiles = files =>
-  mapAsync(files, ({ name, code }) => ({
+  mapAsync(files, ({ base, name, code }) => ({
+    base,
     name: `esm/${name}`,
     code
   })).concat(
-    mapAsync(files, async ({ name, code }) => ({
+    mapAsync(files, async ({ base, name, code }) => ({
+      base,
       name: `cjs/${name}`,
       code: (
         await transformAsync(code, {
@@ -88,20 +97,23 @@ const createCjsFromFiles = files =>
   )
 
 const minifyFiles = files =>
-  mapAsync(files, async ({ name, code }) => ({
+  mapAsync(files, async ({ base, name, code }) => ({
+    base,
     name,
     code: (await minify(code, terserConfig)).code
   }))
 
 const outputFiles = files =>
   Promise.all(
-    mapAsync(files, ({ name, code }) => fs.writeFile(`./dist/${name}`, code))
+    mapAsync(files, ({ base, name, code }) =>
+      fs.writeFile(join(base, `dist`, name), code)
+    )
   )
 
 const computeFileSizes = async files => {
   const sizes = await Promise.all(
-    mapAsync(files, async ({ name, code }) => ({
-      name,
+    mapAsync(files, async ({ base, name, code }) => ({
+      name: join(base, name),
       minified: code.length,
       gzipped: (await gzip(code)).length
     }))
@@ -133,4 +145,5 @@ const build = grfn([
   findFiles
 ])
 
-build()
+build(`.`)
+build(`./packages/grfnviz`)

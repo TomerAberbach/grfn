@@ -2,12 +2,16 @@
 
 > A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
 
+<div align="center">
+  <img src="animation.gif" width="350">
+</div>
+
 ## Features
 
 - **Lightweight:** less than 400 bytes gzipped
 - **Unobtrusive and Unopiniated:** takes normal functions; returns a normal function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as SVG and GIF dependency graph previews through a `grfn/debug/node` module!
+- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as SVG and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz) package!
 
 ## Table of Contents
 
@@ -22,14 +26,6 @@
 ```sh
 $ npm i grfn
 ```
-
-To use the `grfn/debug/node` module, install the following dev dependencies:
-
-```sh
-$ npm i -D graphviz open gifencoder png-js
-```
-
-For the [`graphviz`](https://www.npmjs.com/package/graphviz) package to work, you'll need to install [GraphViz for your operating system](http://www.graphviz.org/download#executable-packages).
 
 ## Usage
 
@@ -121,61 +117,12 @@ taskE output: 14256
 
 ### Debugging
 
-To enable cycle detection import `grfn/debug` in addition to `grfn`:
+To enable cycle detection and other validation import `grfn/debug` in addition to `grfn`:
 
 ```js
 import grfn from 'grfn'
 import 'grfn/debug'
 ```
-
-To generate SVGs and GIFs in node import `grfn/debug/node` in addition to `grfn` (note that `grfn/debug/node` imports `grfn/debug`):
-
-```js
-import grfn from 'grfn'
-import 'grfn/debug/node'
-
-// ...
-
-// The `preview` property is only available
-// in node when `grfn/debug/node` has been imported
-grfn.preview([
-  [taskF, [taskA, taskC, taskD]],
-  [taskD, [taskB]],
-  [taskC, [taskA, taskB]],
-  taskA,
-  taskB
-])
-```
-
-Opens the following SVG in the browser:
-
-<img src="preview.png" width="350">
-
-```js
-import grfn from 'grfn'
-import 'grfn/debug/node'
-
-// ...
-
-// The `gifRun` property is only available
-// in node when `grfn/debug/node` has been imported
-const buffer = await grfn.gifRun({
-  vertices: [
-    [taskF, [taskA, taskC, taskD]],
-    [taskD, [taskB]],
-    [taskC, [taskA, taskB]],
-    taskA,
-    taskB
-  ],
-  input: [4, 2, 3]
-})
-```
-
-The buffer contains the following GIF:
-
-<img src="animation.gif" width="350">
-
-Note that `gifRun` actually runs the dependency graph in order to generate the GIF.
 
 ## API
 
@@ -252,36 +199,6 @@ The following constraints, which are verified when `grfn/debug` is imported befo
       fnA
     ])
     ```
-
-### `grfn.preview(vertices) => Promise<void>`
-
-Only available in node after `grfn/debug/node` is imported.
-
-Generates an SVG of the dependency graph described by `vertices` and returns a `Promise` that resolves when the SVG is opened in the browser (it uses a [data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) so the SVG is not uploaded anywhere).
-
-### `vertices`
-
-Type: `(Function | [Function, Function[]])[]`
-
-Same as `grfn`'s [`vertices`](#vertices) parameter except `grfn.preview` will attempt to generate the SVG even if the given `vertices` do not meet the constraints (to aid in debugging).
-
-### `grfn.gifRun({ vertices, input }) => Promise<Buffer>`
-
-Only available in node after `grfn/debug/node` is imported.
-
-Runs the dependency graph described by `vertices` with the given `input` and generates a GIF of the run. Returns a `Promise` that resolves to a `Buffer` containing the GIF.
-
-### `vertices`
-
-Type: `(Function | [Function, Function[]])[]`
-
-Same as `grfn`'s [`vertices`](#vertices) parameter.
-
-### `input`
-
-Type: `Array`
-
-Parameters to run the dependency graph with.
 
 ## Contributing
 
