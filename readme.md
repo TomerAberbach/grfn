@@ -2,10 +2,7 @@
 
 > A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
 
-<div align="right">
-  <img src="animation.gif" width="350">
-  <br />
-</div>
+<img src="animation.gif" width="350" align="right" style="padding-bottom: 5px;">
 
 ## Features
 
