@@ -2,8 +2,6 @@
 
 > A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
 
-<img src="animation.gif" width="350" align="right">
-
 ## Features
 
 - **Lightweight:** less than 400 bytes gzipped
@@ -29,7 +27,9 @@ $ npm i grfn
 
 Check out `grfn`'s very own [build file](https://github.com/TomerAberbach/grfn/blob/main/build.js) for a real world usage example!
 
-An illustrative example:
+An illustrative example (with a GIF generated using [`grfnviz`](packages/grfnviz)!):
+
+<img src="animation.gif" width="350" align="right">
 
 ```js
 import grfn from 'grfn'
