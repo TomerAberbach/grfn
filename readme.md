@@ -4,7 +4,7 @@
 
 <img src="animation.gif" width="350" align="right">
 
-<sup>&nbsp;</sup>
+<div></div>
 
 ## Features
 
