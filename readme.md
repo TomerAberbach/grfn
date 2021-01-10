@@ -4,8 +4,6 @@
 
 <img src="animation.gif" width="350" align="right">
 
-<br/>
-
 ## Features
 
 - **Lightweight:** less than 400 bytes gzipped
