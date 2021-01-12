@@ -13,7 +13,9 @@
   </a>
 </div>
 
-<div align="center">A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.</div>
+<div align="center">
+  A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
+</div>
 
 ## Features
 
