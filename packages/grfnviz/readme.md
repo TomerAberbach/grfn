@@ -37,11 +37,9 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) dependency to work,
 
 Read [`grfn`'s readme](../..) first! Otherwise, this readme won't make any sense.
 
-### Image Previews
+### GIFs
 
-<img src="../../preview.png" width="350" align="right">
-
-Image previews:
+<img src="../../animation.gif" width="350" align="right">
 
 ```js
 import { promises as fs } from 'fs'
@@ -83,6 +81,27 @@ const runTasks = grfn([
   taskB
 ])
 
+// Create a function that runs your graph AND generates a GIF
+const runTasksAndGenerateGif = gifn(runTasks)
+
+// Runs your graph and get the output and GIF of the run as a Buffer!
+const { output, gif } = await runTasksAndGenerateGif(4, 2, 3)
+await fs.writeFile(gif, 'myfancygraphrun.gif')
+```
+
+### Image Previews
+
+<img src="../../preview.png" width="350" align="right">
+
+Image previews:
+
+```js
+import { promises as fs } from 'fs'
+import grfn from 'grfn'
+import { getSvg, getPng, previewInBrowser, gifn } from 'grfnviz'
+
+// Same as above...
+
 // Get a PNG of your dependency graph as a Buffer
 const pngBuffer = await getPng(runTasks)
 await fs.writeFile(pngBuffer, 'myfancygraph.png')
@@ -94,25 +113,6 @@ await fs.writeFile(svgBuffer, 'myfancygraph.svg')
 // Or preview your graph in the browser!
 // The promise resolves when the page has been opened
 await previewInBrowser(runTasks)
-```
-
-### GIFs
-
-<img src="../../animation.gif" width="350" align="right">
-
-```js
-import { promises as fs } from 'fs'
-import grfn from 'grfn'
-import { getSvg, getPng, previewInBrowser, gifn } from 'grfnviz'
-
-// Same as above...
-
-// Create a function that runs your graph AND generates a GIF
-const runTasksAndGenerateGif = gifn(runTasks)
-
-// Runs your graph and get the output and GIF of the run as a Buffer!
-const { output, gif } = await runTasksAndGenerateGif(4, 2, 3)
-await fs.writeFile(gif, 'myfancygraphrun.gif')
 ```
 
 ## API
