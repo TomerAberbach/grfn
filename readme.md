@@ -51,46 +51,31 @@ An illustrative example (with a GIF generated using [`grfnviz`](packages/grfnviz
 import grfn from 'grfn'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
-const withLogging = fn =>
-  Object.defineProperty(
-    async (...args) => {
-      console.log(`${fn.name} input: ${args.join(`, `)}`)
-      const output = await fn(...args)
-      console.log(`${fn.name} output: ${output}`)
-      return output
-    },
-    `name`,
-    {
-      enumerable: false,
-      writable: false,
-      value: fn.name
-    }
-  )
 
-const taskA = withLogging(async function taskA(n1, n2, n3) {
+async function taskA(n1, n2, n3) {
   await delay(15)
   return n1 + n2 + n3
-})
+}
 
-const taskB = withLogging(async function taskB(n1, n2, n3) {
+async function taskB(n1, n2, n3) {
   await delay(10)
   return n1 * n2 * n3
-})
+}
 
-const taskC = withLogging(async function taskC(a, b) {
+async function taskC(a, b) {
   await delay(5)
   return a + b
-})
+}
 
-const taskD = withLogging(async function taskD(b) {
+async function taskD(b) {
   await delay(1)
   return b * 2
-})
+}
 
-const taskE = withLogging(async function taskE(a, c, d) {
+async function taskE(a, c, d) {
   await delay(10)
   return a * c * d
-})
+}
 
 const runTasks = grfn([
   // `taskE` depends on `taskA`, `taskC`, and `taskD`
@@ -117,16 +102,7 @@ console.log(`final output: ${output}`)
 Output:
 
 ```
-taskA input: 4, 2, 3
-taskB input: 4, 2, 3
-taskB output: 24
-taskD input: 24
-taskD output: 48
-taskA output: 9
-taskC input: 9, 24
-taskC output: 33
-taskE input: 9, 33, 48
-taskE output: 14256
+final output: 14256
 ```
 
 ### Debugging
@@ -137,6 +113,8 @@ To enable cycle detection and other validation import `grfn/debug` in addition t
 import grfn from 'grfn'
 import 'grfn/debug'
 ```
+
+To generate previews and GIFs (like above!) use the [`grfnviz` package](packages/grfnviz)!
 
 ## API
 
