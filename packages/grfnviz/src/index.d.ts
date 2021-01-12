@@ -9,7 +9,7 @@ export const getPng: (grfn: Grfn) => Promise<Buffer>
 
 export const previewInBrowser: (grfn: Grfn) => Promise<void>
 
-type Gifn<I extends any[], O> = (
+export type Gifn<I extends any[], O> = (
   ...args: I
 ) => Promise<{ output: O; gif: Buffer }>
 

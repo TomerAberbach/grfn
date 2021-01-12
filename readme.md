@@ -1,6 +1,19 @@
-# grfn
+<div align="center">
+  <img src="grfn.svg" alt="grfn" width="400" />
+</div>
 
-> A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
+<h1 align="center">grfn</h1>
+
+<div align="center">
+  <a href="https://npmjs.org/package/grfn">
+    <img src="https://badgen.now.sh/npm/v/grfn" alt="version" />
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=grfn">
+    <img src="https://packagephobia.now.sh/badge?p=grfn" alt="install size" />
+  </a>
+</div>
+
+<div align="center">A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.</div>
 
 ## Features
 
@@ -8,6 +21,7 @@
 - **Unobtrusive and Unopiniated:** takes normal functions; returns a normal function!
 - **Isomorphic:** works in node and the browser
 - **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as SVG and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz) package!
+- **Awesome Logo:** designed by [Jill Marbach](https://jillmarbach.com)!
 
 ## Table of Contents
 
