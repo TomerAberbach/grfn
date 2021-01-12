@@ -35,13 +35,13 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) dependency to work,
 
 ## Usage
 
+Read [`grfn`'s readme](../..) first! Otherwise, this readme won't make any sense.
+
+### Image Previews
+
 <img src="../../preview.png" width="350" align="right">
 
-<img src="../../animation.gif" width="350" align="right">
-
-Read [`grfn`'s readme](../..) first! Otherwise this readme won't make any sense.
-
-An illustrative example:
+Image previews:
 
 ```js
 import { promises as fs } from 'fs'
@@ -94,6 +94,18 @@ await fs.writeFile(svgBuffer, 'myfancygraph.svg')
 // Or preview your graph in the browser!
 // The promise resolves when the page has been opened
 await previewInBrowser(runTasks)
+```
+
+### GIFs
+
+<img src="../../animation.gif" width="350" align="right">
+
+```js
+import { promises as fs } from 'fs'
+import grfn from 'grfn'
+import { getSvg, getPng, previewInBrowser, gifn } from 'grfnviz'
+
+// Same as above...
 
 // Create a function that runs your graph AND generates a GIF
 const runTasksAndGenerateGif = gifn(runTasks)
