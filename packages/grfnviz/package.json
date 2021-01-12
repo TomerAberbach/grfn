@@ -7,7 +7,7 @@
     "email": "tomeraberbach@gmail.com",
     "url": "https://tomeraberba.ch"
   },
-  "description": "A snazzy utility for generating SVGs and GIFs from grfn dependency graphs.",
+  "description": "A snazzy utility for generating PNGs, SVGs, and GIFs from grfn dependency graphs.",
   "keywords": [
     "graph",
     "dag",

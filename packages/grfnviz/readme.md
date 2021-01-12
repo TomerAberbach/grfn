@@ -14,7 +14,7 @@
 </div>
 
 <div align="center">
-  A snazzy utility for generating SVGs and GIFs from grfn dependency graphs.
+  A snazzy utility for generating PNGs, SVGs, and GIFs from grfn dependency graphs.
 </div>
 
 ## Table of Contents
