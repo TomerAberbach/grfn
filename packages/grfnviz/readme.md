@@ -93,8 +93,6 @@ await fs.writeFile(gif, 'myfancygraphrun.gif')
 
 <img src="../../preview.png" width="350" align="right">
 
-Image previews:
-
 ```js
 import { promises as fs } from 'fs'
 import grfn from 'grfn'
