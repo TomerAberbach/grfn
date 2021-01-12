@@ -1,6 +1,19 @@
-# grfnviz
+<div align="center">
+  <img src="../../grfn.svg" alt="grfnviz" width="400" />
+</div>
 
-> A snazzy utility for generating SVGs and GIFs from grfn dependency graphs.
+<h1 align="center">grfnviz</h1>
+
+<div align="center">
+  <a href="https://npmjs.org/package/grfnviz">
+    <img src="https://badgen.now.sh/npm/v/grfnviz" alt="version" />
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=grfnviz">
+    <img src="https://packagephobia.now.sh/badge?p=grfnviz" alt="install size" />
+  </a>
+</div>
+
+<div align="center">A snazzy utility for generating SVGs and GIFs from grfn dependency graphs.</div>
 
 ## Table of Contents
 
