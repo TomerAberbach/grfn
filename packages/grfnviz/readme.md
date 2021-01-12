@@ -36,7 +36,7 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) dependency to work,
 ## Usage
 
 <img src="../../preview.png" width="350" align="right">
-<br/>
+
 <img src="../../animation.gif" width="350" align="right">
 
 Read [`grfn`'s readme](../..) first! Otherwise this readme won't make any sense.
