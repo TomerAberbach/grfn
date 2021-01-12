@@ -22,7 +22,7 @@
 - **Lightweight:** less than 400 bytes gzipped
 - **Unobtrusive and Unopiniated:** takes normal functions; returns a normal function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as SVG and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz) package!
+- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as well as PNG, SVG, and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz) package!
 - **Awesome Logo:** designed by [Jill Marbach](https://jillmarbach.com)!
 
 ## Table of Contents
