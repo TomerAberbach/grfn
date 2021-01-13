@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "grfn",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomeraberbach@gmail.com",
