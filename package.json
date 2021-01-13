@@ -32,10 +32,6 @@
     "./debug": {
       "import": "./dist/esm/debug.js",
       "require": "./dist/cjs/debug.js"
-    },
-    "./debug/node": {
-      "import": "./dist/esm/node-debug.js",
-      "require": "./dist/cjs/node-debug.js"
     }
   },
   "types": "./src/index.d.ts",
