@@ -116,12 +116,6 @@
       "!**/helpers.js"
     ]
   },
-  "optionalDependencies": {
-    "graphviz": "0.0.9",
-    "open": "7.3.0",
-    "gifencoder": "2.0.1",
-    "png-js": "1.0.0"
-  },
   "devDependencies": {
     "@babel/core": "7.12.10",
     "@babel/plugin-transform-modules-commonjs": "7.12.1",
