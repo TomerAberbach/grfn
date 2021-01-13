@@ -16,7 +16,7 @@
 
 import PNG from 'png-js'
 import GIFEncoder from 'gifencoder'
-import grfn from '../../../src/index.js'
+import grfn from 'grfn'
 import { getInputFns, getOutputFn } from './graph.js'
 import getImage from './get-image.js'
 
