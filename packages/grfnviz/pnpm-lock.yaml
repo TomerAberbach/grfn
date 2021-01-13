@@ -1,6 +1,7 @@
 dependencies:
   gifencoder: 2.0.1
   graphviz: 0.0.9
+  grfn: 0.0.2
   open: 7.3.0
   png-js: 1.0.0
 devDependencies:
@@ -155,6 +156,12 @@ packages:
       node: '>=0.6.8'
     resolution:
       integrity: sha512-SmoY2pOtcikmMCqCSy2NO1YsRfu9OO0wpTlOYW++giGjfX1a6gax/m1Fo8IdUd0/3H15cTOfR1SMKwohj4LKsg==
+  /grfn/0.0.2:
+    dev: false
+    engines:
+      node: '>= 6.0.0'
+    resolution:
+      integrity: sha512-JxnukhWpC/oCu1lNhZAwUTXWlZa3DROlpzy3TElnnnmQzElMCi0jcOLRzb4BAyr/zhM67or4SjsSq1j2E5JRYg==
   /has-unicode/2.0.1:
     dev: false
     resolution:
@@ -523,5 +530,6 @@ specifiers:
   '@types/node': 14.14.20
   gifencoder: 2.0.1
   graphviz: 0.0.9
+  grfn: 0.0.2
   open: 7.3.0
   png-js: 1.0.0
