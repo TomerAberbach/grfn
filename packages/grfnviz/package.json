@@ -43,6 +43,7 @@
   "dependencies": {
     "gifencoder": "2.0.1",
     "graphviz": "0.0.9",
+    "grfn": "0.0.1",
     "open": "7.3.0",
     "png-js": "1.0.0"
   },
