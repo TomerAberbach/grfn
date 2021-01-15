@@ -1,6 +1,4 @@
-type isNode = ReturnType<typeof setTimeout> extends number
-  ? false
-  : true
+type isNode = ReturnType<typeof setTimeout> extends number ? false : true
 
 type NodeOnly<T> = isNode extends true ? T : never
 
@@ -9,9 +7,9 @@ type Grfn<I extends any[] = any[], O = any> = {
   (...args: I): Promise<O>
 }
 
-export const getSvg: (grfn: Grfn) => Promise<
-  isNode extends true ? Buffer : string
->
+export const getSvg: (
+  grfn: Grfn
+) => Promise<isNode extends true ? Buffer : string>
 
 export const getPng: NodeOnly<(grfn: Grfn) => Promise<Buffer>>
 
