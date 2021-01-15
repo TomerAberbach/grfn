@@ -31,8 +31,7 @@ const terserConfig = {
   mangle: {
     properties: {
       // eslint-disable-next-line camelcase
-      keep_quoted: true,
-      reserved: [`dot`]
+      keep_quoted: true
     }
   },
   module: true,
@@ -97,7 +96,14 @@ const minifyFiles = files =>
   mapAsync(files, async ({ base, name, code }) => ({
     base,
     name,
-    code: (await minify(code, terserConfig)).code
+    code: (
+      await minify(
+        code,
+        base.includes(`grfnviz`)
+          ? { ...terserConfig, mangle: { properties: false } }
+          : terserConfig
+      )
+    ).code
   }))
 
 const outputFiles = files =>
