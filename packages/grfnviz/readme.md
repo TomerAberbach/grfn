@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="../../grfn.svg" alt="grfnviz" width="400" />
+  <img src="https://raw.githubusercontent.com/TomerAberbach/grfn/main/grfn.svg" alt="grfnviz" width="400" />
 </div>
 
 <h1 align="center">grfnviz</h1>
@@ -35,11 +35,11 @@ For the [`graphviz`](https://www.npmjs.com/package/graphviz) dependency to work,
 
 ## Usage
 
-Read [`grfn`'s readme](../..) first! Otherwise, this readme won't make any sense.
+Read [`grfn`'s readme](https://github.com/TomerAberbach/grfn) first! Otherwise, this readme won't make any sense.
 
 ### GIFs
 
-<img src="../../animation.gif" width="350" align="right">
+<img src="https://raw.githubusercontent.com/TomerAberbach/grfn/main/animation.gif" width="350" align="right">
 
 ```js
 import { promises as fs } from 'fs'
@@ -91,7 +91,7 @@ await fs.writeFile(gif, 'myfancygraphrun.gif')
 
 ### Image Previews
 
-<img src="../../preview.png" width="350" align="right">
+<img src="https://raw.githubusercontent.com/TomerAberbach/grfn/main/preview.png" width="350" align="right">
 
 ```js
 import { promises as fs } from 'fs'
@@ -115,19 +115,19 @@ await previewInBrowser(runTasks)
 
 ## API
 
-### `getPng(grfn) => Promise<Buffer>`
+### `getPng(grfn) => Promise<Buffer>` (Node Only)
 
 Returns a `Promise` that resolves to a PNG of the dependency graph of `grfn` as a `Buffer`. The `grfn` argument must be a function returned by the `grfn` package.
 
-### `getSvg(grfn) => Promise<Buffer>`
+### `getSvg(grfn) => Promise<Buffer | string>`
 
-Returns a `Promise` that resolves to an SVG of the dependency graph of `grfn` as a `Buffer`. The `grfn` argument must be a function returned by the `grfn` package.
+Returns a `Promise` that resolves to an SVG of the dependency graph of `grfn` as a `Buffer` in Node and as a string in the browser. The `grfn` argument must be a function returned by the `grfn` package.
 
-### `openInBrowser(grfn) => Promise<void>`
+### `openInBrowser(grfn) => Promise<void>` (Node Only)
 
 Returns a `Promise` that resolves when a preview of the dependency graph of `grfn` is opened in the browser. The `grfn` argument must be a function returned by the `grfn` package. The preview is opened using a [data URI](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs) so the data is not uploaded anywhere.
 
-### `gifn(grfn) => (...args) => Promise<{ output, gif: Buffer }>`
+### `gifn(grfn) => (...args) => Promise<{ output, gif: Buffer }>` (Node Only)
 
 Returns a function that runs `grfn` with the given `args` as input while also generating a GIF of the run. The `grfn` argument must be a function returned by the `grfn` package.
 
