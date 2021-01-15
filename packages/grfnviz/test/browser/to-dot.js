@@ -28,6 +28,5 @@ function d() {}
 const run = grfn([[a, [b, c]], [b, [d]], [c, [d]], d])
 
 test(`toDot`, t => {
-  t.log(run)
   t.snapshot(toDot({ graph: run.gr }))
 })

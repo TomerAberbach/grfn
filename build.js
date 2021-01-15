@@ -31,7 +31,8 @@ const terserConfig = {
   mangle: {
     properties: {
       // eslint-disable-next-line camelcase
-      keep_quoted: true
+      keep_quoted: true,
+      reserved: [`dot`]
     }
   },
   module: true,
