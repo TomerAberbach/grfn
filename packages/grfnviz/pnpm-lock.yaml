@@ -3,20 +3,20 @@ dependencies:
   gifencoder: 2.0.1
   graphviz: 0.0.9
   grfn: 0.0.3
-  open: 7.3.0
+  open: 7.3.1
   png-js: 1.0.0
 devDependencies:
-  '@types/node': 14.14.20
+  '@types/node': 14.14.21
 lockfileVersion: 5.2
 packages:
   /@hpcc-js/wasm/1.0.1:
     dev: false
     resolution:
       integrity: sha512-xOURtMOvwNSM9loF9CIP2cFm7cxzDaQvnoq0u+6bql1j1iaD2W+mC6ym70wWW037TTmPS2KBqy9Ti1THu+GqHw==
-  /@types/node/14.14.20:
+  /@types/node/14.14.21:
     dev: true
     resolution:
-      integrity: sha512-Y93R97Ouif9JEOWPIUyU+eyIdyRqQR0I8Ez1dzku4hDx34NWh4HbtIc3WNzwB1Y9ULvNGeu5B8h8bVL5cAk4/A==
+      integrity: sha512-cHYfKsnwllYhjOzuC5q1VpguABBeecUp24yFluHpn/BQaVxB1CuQ1FSRZCzrPxrkIfWISXV2LbeoBthLWg0+0A==
   /abbrev/1.1.1:
     dev: false
     resolution:
@@ -351,7 +351,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=
-  /open/7.3.0:
+  /open/7.3.1:
     dependencies:
       is-docker: 2.1.1
       is-wsl: 2.2.0
@@ -359,7 +359,7 @@ packages:
     engines:
       node: '>=8'
     resolution:
-      integrity: sha512-mgLwQIx2F/ye9SmbrUkurZCnkoXyXyu9EbHtJZrICjVAJfyMArdHp3KkixGdZx1ZHFPNIwl0DDM1dFFqXbTLZw==
+      integrity: sha512-f2wt9DCBKKjlFbjzGb8MOAW8LH8F0mrs1zc7KTjAJ9PZNQbfenzWbNP1VZJvw6ICMG9r14Ah6yfwPn7T7i646A==
   /os-homedir/1.0.2:
     dev: false
     engines:
@@ -533,9 +533,9 @@ packages:
       integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
 specifiers:
   '@hpcc-js/wasm': 1.0.1
-  '@types/node': 14.14.20
+  '@types/node': 14.14.21
   gifencoder: 2.0.1
   graphviz: 0.0.9
   grfn: 0.0.3
-  open: 7.3.0
+  open: 7.3.1
   png-js: 1.0.0

@@ -50,11 +50,11 @@
     "gifencoder": "2.0.1",
     "graphviz": "0.0.9",
     "grfn": "0.0.3",
-    "open": "7.3.0",
+    "open": "7.3.1",
     "png-js": "1.0.0"
   },
   "devDependencies": {
-    "@types/node": "14.14.20"
+    "@types/node": "14.14.21"
   },
   "engines": {
     "node": ">= 10.0.0"
