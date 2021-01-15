@@ -100,7 +100,14 @@ const minifyFiles = files =>
       await minify(
         code,
         base.includes(`grfnviz`)
-          ? { ...terserConfig, mangle: { properties: false } }
+          ? {
+              ...terserConfig,
+              mangle: {
+                properties: {
+                  regex: /^gr$/u
+                }
+              }
+            }
           : terserConfig
       )
     ).code
