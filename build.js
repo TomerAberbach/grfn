@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-import { join, dirname, basename } from 'path'
+import { join, dirname, relative } from 'path'
 import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
 import { minify } from 'terser'
 import { transformAsync } from '@babel/core'
+import getAllFiles from 'get-all-files'
 import grfn from './src/index.js'
 import './src/debug.js'
 
@@ -34,33 +35,28 @@ const terserConfig = {
     }
   },
   module: true,
-  nameCache: {}
-}
-
-const mapAsync = (array, fn) => array.map(async value => fn(await value))
-
-const ensureDist = async base => {
-  try {
-    await Promise.all([
-      fs.mkdir(join(base, `dist/esm`), { recursive: true }),
-      fs.mkdir(join(base, `dist/cjs`), { recursive: true })
-    ])
-  } catch (error) {
-    if (error.code !== `EEXIST`) {
-      throw error
+  nameCache: {
+    props: {
+      props: {
+        $gr: `j`
+      }
     }
   }
 }
 
-const findFiles = async base =>
-  (await fs.readdir(join(base, `src`)))
-    .filter(name => name.endsWith(`.js`))
-    .map(name => join(base, `src`, name))
+const mapAsync = (array, fn) => array.map(async value => fn(await value))
 
-const readFiles = filenames =>
+const findFiles = async base => ({
+  base,
+  filenames: (
+    await getAllFiles.default.async.array(join(base, `src`))
+  ).filter(name => name.endsWith(`.js`))
+})
+
+const readFiles = ({ base, filenames }) =>
   filenames.map(async filename => ({
-    base: dirname(dirname(filename)),
-    name: basename(filename),
+    base,
+    name: relative(join(base, `src`), filename),
     code: (await fs.readFile(filename)).toString(`utf8`)
   }))
 
@@ -105,9 +101,17 @@ const minifyFiles = files =>
 
 const outputFiles = files =>
   Promise.all(
-    mapAsync(files, ({ base, name, code }) =>
-      fs.writeFile(join(base, `dist`, name), code)
-    )
+    mapAsync(files, async ({ base, name, code }) => {
+      const filename = join(base, `dist`, name)
+      try {
+        await fs.mkdir(dirname(filename), { recursive: true })
+      } catch (error) {
+        if (error.code !== `EEXIST`) {
+          throw error
+        }
+      }
+      await fs.writeFile(filename, code)
+    })
   )
 
 const computeFileSizes = async files => {
@@ -133,12 +137,8 @@ const logFileSizes = sizes => {
 
 const build = grfn([
   [logFileSizes, [computeFileSizes, outputFiles]],
-
   [computeFileSizes, [minifyFiles]],
-
-  [outputFiles, [minifyFiles, ensureDist]],
-  ensureDist,
-
+  [outputFiles, [minifyFiles]],
   [minifyFiles, [createCjsFromFiles]],
   [createCjsFromFiles, [readFiles]],
   [readFiles, [findFiles]],
