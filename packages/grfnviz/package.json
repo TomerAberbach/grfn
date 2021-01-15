@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "grfnviz",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomeraberbach@gmail.com",
