@@ -121,7 +121,7 @@ Returns a `Promise` that resolves to a PNG of the dependency graph of `grfn` as 
 
 ### `getSvg(grfn) => Promise<Buffer | string>`
 
-Returns a `Promise` that resolves to an SVG of the dependency graph of `grfn` as a `Buffer` in Node and as a string in the browser. The `grfn` argument must be a function returned by the `grfn` package.
+Returns a `Promise` that resolves to an SVG of the dependency graph of `grfn` as a `Buffer` in Node or as a string in the browser. The `grfn` argument must be a function returned by the `grfn` package.
 
 ### `openInBrowser(grfn) => Promise<void>` (Node Only)
 
