@@ -27,11 +27,16 @@
     "dist",
     "src/index.d.ts"
   ],
-  "module": "./dist/esm/index.js",
-  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/node/index.js",
+  "main": "./dist/cjs/node/index.js",
+  "browser": "./dist/cjs/browser/index.js",
   "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
+    "node": {
+      "require": "./dist/cjs/node/index.js",
+      "default": "./dist/esm/node/index.js"
+    },
+    "require": "./dist/cjs/browser/index.js",
+    "default": "./dist/esm/browser/index.js"
   },
   "types": "./src/index.d.ts",
   "homepage": "https://github.com/TomerAberbach/grfn/tree/main/packages/grfnviz",
@@ -41,6 +46,7 @@
   },
   "license": "Apache 2.0",
   "dependencies": {
+    "@hpcc-js/wasm": "1.0.1",
     "gifencoder": "2.0.1",
     "graphviz": "0.0.9",
     "grfn": "0.0.3",

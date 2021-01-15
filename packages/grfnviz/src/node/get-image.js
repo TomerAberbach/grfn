@@ -15,40 +15,24 @@
  */
 
 import graphviz from 'graphviz'
+import createGetFnName from '../create-get-fn-name.js'
 
 const getImage = ({ graph, type, nodeAttributes, edgeAttributes }) => {
   const digraph = graphviz.digraph(`G`)
   digraph.setNodeAttribut(`fontname`, `monospace`)
   digraph.setEdgeAttribut(`fontname`, `monospace`)
 
-  const names = new Map()
-  const getName = fn => {
-    let name = fn.name === `` ? `unnamed` : fn.name
-    let counter = 0
-
-    while (
-      digraph.getNode(name + (counter > 0 ? ` (${counter})` : ``)) != null
-    ) {
-      counter++
-    }
-
-    if (counter > 0) {
-      name += ` (${counter})`
-    }
-
-    names.set(fn, name)
-    return name
-  }
+  const getFnName = createGetFnName()
 
   for (const fn of graph.keys()) {
-    digraph.addNode(getName(fn), nodeAttributes?.get(fn) ?? {})
+    digraph.addNode(getFnName(fn), nodeAttributes?.get(fn) ?? {})
   }
 
   for (const [fn, dependencies] of graph.entries()) {
     for (const dependency of dependencies) {
       digraph.addEdge(
-        names.get(dependency),
-        names.get(fn),
+        getFnName(dependency),
+        getFnName(fn),
         edgeAttributes?.get(dependency) ?? {}
       )
     }

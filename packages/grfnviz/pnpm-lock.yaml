@@ -1,4 +1,5 @@
 dependencies:
+  '@hpcc-js/wasm': 1.0.1
   gifencoder: 2.0.1
   graphviz: 0.0.9
   grfn: 0.0.3
@@ -8,6 +9,10 @@ devDependencies:
   '@types/node': 14.14.20
 lockfileVersion: 5.2
 packages:
+  /@hpcc-js/wasm/1.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-xOURtMOvwNSM9loF9CIP2cFm7cxzDaQvnoq0u+6bql1j1iaD2W+mC6ym70wWW037TTmPS2KBqy9Ti1THu+GqHw==
   /@types/node/14.14.20:
     dev: true
     resolution:
@@ -527,6 +532,7 @@ packages:
     resolution:
       integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
 specifiers:
+  '@hpcc-js/wasm': 1.0.1
   '@types/node': 14.14.20
   gifencoder: 2.0.1
   graphviz: 0.0.9
