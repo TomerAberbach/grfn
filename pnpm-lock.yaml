@@ -13,6 +13,7 @@ devDependencies:
   eslint: 7.17.0
   eslint-plugin-node: 11.1.0_eslint@7.17.0
   fast-check: 2.10.0
+  get-all-files: 3.0.0
   husky: 4.3.6
   lint-staged: 10.5.3
   npm-run-all: 4.1.5
@@ -2098,6 +2099,12 @@ packages:
       node: '>=6.9.0'
     resolution:
       integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==
+  /get-all-files/3.0.0:
+    dev: true
+    engines:
+      node: '>= 10'
+    resolution:
+      integrity: sha512-WkhplR2a8uALIGXCbV/bAyihkBU7r2jSCtQIph6roCXJmMEVvyhxuoHAizNd5MUSrHaSLN2JoUEv5yro0SLaKQ==
   /get-caller-file/2.0.5:
     dev: true
     engines:
@@ -4690,6 +4697,7 @@ specifiers:
   eslint: 7.17.0
   eslint-plugin-node: 11.1.0
   fast-check: 2.10.0
+  get-all-files: 3.0.0
   husky: 4.3.6
   lint-staged: 10.5.3
   npm-run-all: 4.1.5
