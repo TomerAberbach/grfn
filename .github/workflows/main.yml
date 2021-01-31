@@ -17,5 +17,4 @@ jobs:
         with:
           version: 4.11.1
           run_install: true
-      - run: pnpm install
       - run: pnpm test
