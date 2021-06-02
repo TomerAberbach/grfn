@@ -23,7 +23,7 @@ const createGetFnName = () => {
       return names.get(fn)
     }
 
-    let name = (fn.name ?? ``) === `` ? `unnamed` : fn.name
+    let name = (fn.name == null ? `` : fn.name) === `` ? `unnamed` : fn.name
 
     if (!counts.has(name)) {
       names.set(fn, name)
