@@ -1,20 +1,43 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 name: CI
-on:
-  - push
-  - pull_request
+
+on: [push, pull_request]
+
 jobs:
   test:
-    name: Node.js
-    runs-on: ubuntu-latest
+    name: Node.js v${{ matrix.nodejs }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     strategy:
+      matrix:
+        nodejs: [12, 14]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 14
-      - uses: pnpm/action-setup@v1.2.1
-        with:
-          version: 4.11.1
-          run_install: true
-      - run: pnpm test
+          node-version: ${{ matrix.nodejs }}
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test
+        run: pnpm test

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import grfn from '../src/index.js'
+import grfn from '../../src/index.js'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 

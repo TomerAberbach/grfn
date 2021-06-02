@@ -1,7 +1,6 @@
 {
-  "type": "module",
   "name": "grfn",
-  "version": "0.0.3",
+  "version": "0.0.0",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomeraberbach@gmail.com",
@@ -18,124 +17,87 @@
     "solver",
     "topological"
   ],
-  "files": [
-    "dist",
-    "src/index.d.ts"
-  ],
-  "module": "./dist/esm/index.js",
-  "main": "./dist/cjs/index.js",
-  "exports": {
-    ".": {
-      "import": "./dist/esm/index.js",
-      "require": "./dist/cjs/index.js"
-    },
-    "./debug": {
-      "import": "./dist/esm/debug.js",
-      "require": "./dist/cjs/debug.js"
-    }
-  },
-  "types": "./src/index.d.ts",
   "homepage": "https://github.com/TomerAberbach/grfn",
   "repository": "TomerAberbach/grfn",
   "bugs": {
     "url": "https://github.com/TomerAberbach/grfn/issues"
   },
-  "license": "Apache 2.0",
-  "scripts": {
-    "license": "addlicense $(git diff --name-only HEAD)",
-    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
-    "lint:prettier": "pnpm run lint:prettier:base -- --write .",
-    "lint:eslint:base": "eslint --ext js --ignore-path .gitignore",
-    "lint:eslint": "pnpm run lint:eslint:base -- --fix .",
-    "lint": "run-s lint:*",
-    "test": "ava",
-    "coverage": "c8 pnpm run test",
-    "build": "node build.js",
-    "prepublishOnly": "run-s lint build"
-  },
-  "prettier": "@tomer/prettier-config",
-  "eslintConfig": {
-    "extends": "@tomer",
-    "plugins": [
-      "node"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": "off",
-      "node/no-unsupported-features/es-builtins": "error",
-      "node/no-unsupported-features/es-syntax": [
-        "error",
-        {
-          "ignores": [
-            "modules"
-          ]
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": [
-          "build.js",
-          "playground.js",
-          "**/test/**/*.js"
-        ],
-        "rules": {
-          "node/no-unsupported-features/es-builtins": "off",
-          "node/no-unsupported-features/es-syntax": "off"
-        }
-      }
-    ]
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "src/index.d.ts"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">= 12.17"
   },
   "browserslist": [
     "defaults",
     "not IE 11",
     "not op_mini all"
   ],
+  "exports": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./src/index.d.ts",
+  "scripts": {
+    "license": "addlicense $(git diff --name-only HEAD)",
+    "prepare": "pnpx --no-install simple-git-hooks",
+    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
+    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
+    "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
+    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
+    "lint": "run-s lint:*",
+    "test:js": "ava",
+    "test:ts": "tsd",
+    "test": "run-s test:*",
+    "coverage": "c8 run-s test:js",
+    "build": "node build.js",
+    "prepublishOnly": "run-s lint build"
+  },
+  "prettier": "@tomer/prettier-config",
+  "eslintConfig": {
+    "extends": "@tomer"
+  },
   "lint-staged": {
     "*.js": [
       "addlicense",
-      "pnpm run lint:prettier:base -- --write",
-      "pnpm run lint:eslint:base -- --fix"
+      "run-s \"lint:prettier:base -- --write {@}\" --",
+      "run-s \"lint:eslint:base -- --fix {@}\" --"
     ],
-    "!(pnpm-lock).{json,yaml,md}": "pnpm run lint:prettier:base -- --write"
+    "*.ts": [
+      "addlicense",
+      "run-s \"lint:prettier:base -- --write {@}\" --"
+    ],
+    "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
+  },
+  "tsd": {
+    "directory": "./test"
   },
   "commitlint": {
     "extends": "@commitlint/config-conventional"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "ava": {
-    "files": [
-      "**/test/**/*.js",
-      "!**/helpers.js"
-    ]
+  "simple-git-hooks": {
+    "pre-commit": "pnpx --no-install lint-staged",
+    "commit-msg": "pnpx --no-install commitlint -e"
   },
   "devDependencies": {
-    "@babel/core": "7.12.10",
-    "@babel/plugin-transform-modules-commonjs": "7.12.1",
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
-    "@tomer/eslint-config": "0.0.16",
-    "@tomer/prettier-config": "0.0.2",
+    "@commitlint/cli": "12.1.4",
+    "@commitlint/config-conventional": "12.1.4",
+    "@tomer/eslint-config": "0.1.1",
+    "@tomer/prettier-config": "0.1.0",
+    "@types/node": "15.9.0",
     "ava": "3.15.0",
-    "ava-fast-check": "4.0.0",
-    "babel-eslint": "10.1.0",
-    "babel-plugin-add-module-exports": "1.0.4",
-    "c8": "7.4.0",
-    "eslint": "7.17.0",
-    "eslint-plugin-node": "11.1.0",
-    "fast-check": "2.10.0",
-    "get-all-files": "3.0.0",
-    "husky": "4.3.6",
-    "lint-staged": "10.5.3",
+    "ava-fast-check": "4.0.2",
+    "c8": "7.7.2",
+    "eslint": "7.27.0",
+    "fast-check": "2.16.0",
+    "get-all-files": "4.0.0",
+    "lint-staged": "11.0.0",
     "npm-run-all": "4.1.5",
-    "prettier": "2.2.1",
-    "terser": "5.5.1"
-  },
-  "engines": {
-    "node": ">= 6.0.0"
+    "prettier": "2.3.0",
+    "simple-git-hooks": "2.4.1",
+    "terser": "5.7.0",
+    "tsd": "0.16.0",
+    "typescript": "4.3.2"
   }
 }

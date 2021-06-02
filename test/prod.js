@@ -15,6 +15,6 @@
  */
 
 import test from 'ava'
-import { works } from './helpers.js'
+import { works } from './helpers/index.js'
 
 test(`prod words`, works)
