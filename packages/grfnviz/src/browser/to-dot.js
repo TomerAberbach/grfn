@@ -48,7 +48,9 @@ const toDot = ({ graph, nodeAttributes, edgeAttributes }) => {
   dot += `\n`
   for (const fn of graph.keys()) {
     dot += serializeStatement(
-      `${getNodeName(fn)}${serializeAttributes(nodeAttributes?.get(fn) ?? {})}`
+      `${getNodeName(fn)}${serializeAttributes(
+        (nodeAttributes && nodeAttributes.get(fn)) || {}
+      )}`
     )
   }
 
@@ -57,7 +59,7 @@ const toDot = ({ graph, nodeAttributes, edgeAttributes }) => {
     for (const dependency of dependencies) {
       dot += serializeStatement(
         `${getNodeName(dependency)} -> ${getNodeName(fn)}${serializeAttributes(
-          edgeAttributes?.get(dependency) ?? {}
+          (edgeAttributes && edgeAttributes.get(dependency)) || {}
         )}`
       )
     }

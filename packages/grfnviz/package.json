@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "grfnviz",
   "version": "0.0.7",
   "author": {
@@ -23,28 +22,28 @@
     "gif",
     "animation"
   ],
-  "files": [
-    "dist",
-    "src/index.d.ts"
-  ],
-  "module": "./dist/esm/node/index.js",
-  "main": "./dist/cjs/node/index.js",
-  "browser": "./dist/cjs/browser/index.js",
-  "exports": {
-    "node": {
-      "require": "./dist/cjs/node/index.js",
-      "default": "./dist/esm/node/index.js"
-    },
-    "require": "./dist/cjs/browser/index.js",
-    "default": "./dist/esm/browser/index.js"
-  },
-  "types": "./src/index.d.ts",
   "homepage": "https://github.com/TomerAberbach/grfn/tree/main/packages/grfnviz",
   "repository": "TomerAberbach/grfn",
   "bugs": {
     "url": "https://github.com/TomerAberbach/grfn/issues"
   },
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "src/index.d.ts"
+  ],
+  "type": "module",
+  "engines": {
+    "node": ">= 12.17"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not op_mini all"
+  ],
+  "exports": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./src/index.d.ts",
   "dependencies": {
     "@hpcc-js/wasm": "1.0.1",
     "gifencoder": "2.0.1",
@@ -52,11 +51,5 @@
     "grfn": "0.0.3",
     "open": "7.3.1",
     "png-js": "1.0.0"
-  },
-  "devDependencies": {
-    "@types/node": "14.14.21"
-  },
-  "engines": {
-    "node": ">= 10.0.0"
   }
 }

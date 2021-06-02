@@ -17,7 +17,7 @@
 import test from 'ava'
 import grfn from '../src/index.js'
 import '../src/debug.js'
-import { works } from './helpers.js'
+import { works } from './helpers/index.js'
 
 /* eslint-disable no-empty-function */
 function a() {}

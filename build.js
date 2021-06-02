@@ -19,8 +19,7 @@ import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
 import { minify } from 'terser'
-import { transformAsync } from '@babel/core'
-import getAllFiles from 'get-all-files'
+import { getAllFiles } from 'get-all-files'
 import grfn from './src/index.js'
 import './src/debug.js'
 
@@ -38,7 +37,7 @@ const terserConfig = {
   nameCache: {
     props: {
       props: {
-        $gr: `j`
+        $gr: `gr`
       }
     }
   }
@@ -48,9 +47,9 @@ const mapAsync = (array, fn) => array.map(async value => fn(await value))
 
 const findFiles = async base => ({
   base,
-  filenames: (
-    await getAllFiles.default.async.array(join(base, `src`))
-  ).filter(name => name.endsWith(`.js`))
+  filenames: (await getAllFiles(join(base, `src`)).toArray()).filter(name =>
+    name.endsWith(`.js`)
+  )
 })
 
 const readFiles = ({ base, filenames }) =>
@@ -59,38 +58,6 @@ const readFiles = ({ base, filenames }) =>
     name: relative(join(base, `src`), filename),
     code: (await fs.readFile(filename)).toString(`utf8`)
   }))
-
-const createCjsFromFiles = files =>
-  mapAsync(files, ({ base, name, code }) => ({
-    base,
-    name: `esm/${name}`,
-    code
-  })).concat(
-    mapAsync(files, async ({ base, name, code }) => ({
-      base,
-      name: `cjs/${name}`,
-      code: (
-        await transformAsync(code, {
-          plugins: [
-            [
-              `@babel/transform-modules-commonjs`,
-              {
-                loose: true,
-                strict: true,
-                noInterop: true
-              }
-            ],
-            [
-              `add-module-exports`,
-              {
-                addDefaultProperty: true
-              }
-            ]
-          ]
-        })
-      ).code
-    }))
-  )
 
 const minifyFiles = files =>
   mapAsync(files, async ({ base, name, code }) => ({
@@ -153,8 +120,7 @@ const build = grfn([
   [logFileSizes, [computeFileSizes, outputFiles]],
   [computeFileSizes, [minifyFiles]],
   [outputFiles, [minifyFiles]],
-  [minifyFiles, [createCjsFromFiles]],
-  [createCjsFromFiles, [readFiles]],
+  [minifyFiles, [readFiles]],
   [readFiles, [findFiles]],
   findFiles
 ])

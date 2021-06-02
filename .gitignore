@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 .eslintcache
-dist/
-coverage/
+coverage
+dist
