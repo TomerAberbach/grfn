@@ -1,6 +1,6 @@
 {
   "name": "grfnviz",
-  "version": "0.0.7",
+  "version": "1.0.0",
   "author": {
     "name": "Tomer Aberbach",
     "email": "tomeraberbach@gmail.com",
@@ -48,7 +48,7 @@
     "@hpcc-js/wasm": "1.0.1",
     "gifencoder": "2.0.1",
     "graphviz": "0.0.9",
-    "grfn": "0.0.3",
+    "grfn": "1.0.0",
     "open": "7.3.1",
     "png-js": "1.0.0"
   }
