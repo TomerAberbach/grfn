@@ -46,10 +46,12 @@ this readme won't make any sense.
 
 <img src="https://raw.githubusercontent.com/TomerAberbach/grfn/main/animation.gif" width="350" align="right">
 
+<!-- eslint-skip -->
+
 ```js
 import { promises as fs } from 'fs'
 import grfn from 'grfn'
-import { getSvg, getPng, previewInBrowser, gifn } from 'grfnviz'
+import { getPng, getSvg, gifn, previewInBrowser } from 'grfnviz'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 
@@ -83,7 +85,7 @@ const runTasks = grfn([
   [taskD, [taskB]],
   [taskC, [taskA, taskB]],
   taskA,
-  taskB
+  taskB,
 ])
 
 // Create a function that runs your graph AND generates a GIF
@@ -91,7 +93,7 @@ const runTasksAndGenerateGif = gifn(runTasks)
 
 // Runs your graph and get the output and GIF of the run as a Buffer!
 const { output, gif } = await runTasksAndGenerateGif(4, 2, 3)
-await fs.writeFile(gif, 'myfancygraphrun.gif')
+await fs.writeFile(gif, `myfancygraphrun.gif`)
 ```
 
 ### Image Previews
@@ -101,17 +103,17 @@ await fs.writeFile(gif, 'myfancygraphrun.gif')
 ```js
 import { promises as fs } from 'fs'
 import grfn from 'grfn'
-import { getSvg, getPng, previewInBrowser, gifn } from 'grfnviz'
+import { getPng, getSvg, gifn, previewInBrowser } from 'grfnviz'
 
 // Same as above...
 
 // Get a PNG of your dependency graph as a Buffer
 const pngBuffer = await getPng(runTasks)
-await fs.writeFile(pngBuffer, 'myfancygraph.png')
+await fs.writeFile(pngBuffer, `myfancygraph.png`)
 
 // Get an SVG of your dependency graph as a Buffer
 const svgBuffer = await getSvg(runTasks)
-await fs.writeFile(svgBuffer, 'myfancygraph.svg')
+await fs.writeFile(svgBuffer, `myfancygraph.svg`)
 
 // Or preview your graph in the browser!
 // The promise resolves when the page has been opened

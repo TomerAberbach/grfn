@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { join, dirname, relative } from 'path'
+import { dirname, join, relative } from 'path'
 import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
 import { promisify } from 'util'
@@ -30,17 +30,17 @@ const terserConfig = {
   mangle: {
     properties: {
       // eslint-disable-next-line camelcase
-      keep_quoted: true
-    }
+      keep_quoted: true,
+    },
   },
   module: true,
   nameCache: {
     props: {
       props: {
-        $gr: `gr`
-      }
-    }
-  }
+        $gr: `gr`,
+      },
+    },
+  },
 }
 
 const mapAsync = (array, fn) => array.map(async value => fn(await value))
@@ -48,15 +48,15 @@ const mapAsync = (array, fn) => array.map(async value => fn(await value))
 const findFiles = async base => ({
   base,
   filenames: (await getAllFiles(join(base, `src`)).toArray()).filter(name =>
-    name.endsWith(`.js`)
-  )
+    name.endsWith(`.js`),
+  ),
 })
 
 const readFiles = ({ base, filenames }) =>
   filenames.map(async filename => ({
     base,
     name: relative(join(base, `src`), filename),
-    code: (await fs.readFile(filename)).toString(`utf8`)
+    code: (await fs.readFile(filename)).toString(`utf8`),
   }))
 
 const minifyFiles = files =>
@@ -71,13 +71,13 @@ const minifyFiles = files =>
               ...terserConfig,
               mangle: {
                 properties: {
-                  regex: /^gr$/u
-                }
-              }
+                  regex: /^gr$/u,
+                },
+              },
             }
-          : terserConfig
+          : terserConfig,
       )
-    ).code
+    ).code,
   }))
 
 const outputFiles = files =>
@@ -92,7 +92,7 @@ const outputFiles = files =>
         }
       }
       await fs.writeFile(filename, code)
-    })
+    }),
   )
 
 const computeFileSizes = async files => {
@@ -100,8 +100,8 @@ const computeFileSizes = async files => {
     mapAsync(files, async ({ base, name, code }) => ({
       name: join(base, name),
       minified: code.length,
-      gzipped: (await gzip(code)).length
-    }))
+      gzipped: (await gzip(code)).length,
+    })),
   )
   sizes.sort((a, b) => a.name.localeCompare(b.name))
   return sizes
@@ -122,7 +122,7 @@ const build = grfn([
   [outputFiles, [minifyFiles]],
   [minifyFiles, [readFiles]],
   [readFiles, [findFiles]],
-  findFiles
+  findFiles,
 ])
 
 build(`.`)

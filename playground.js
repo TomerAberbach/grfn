@@ -30,8 +30,8 @@ const withLogging = fn =>
     {
       enumerable: false,
       writable: false,
-      value: fn.name
-    }
+      value: fn.name,
+    },
   )
 
 /* eslint-disable */
@@ -66,7 +66,7 @@ grfn([
   [taskD, [taskB]],
   [taskC, [taskA, taskB]],
   taskA,
-  taskB
+  taskB,
 ])
 
 /*

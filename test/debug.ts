@@ -14,52 +14,43 @@
  * limitations under the License.
  */
 
-import test from 'ava'
-import grfn from '../src/index.js'
+/* eslint-disable no-restricted-syntax */
+
+import grfn, { type Fn } from '../src/index.js'
 import '../src/debug.js'
 import { works } from './helpers/index.js'
 
-/* eslint-disable no-empty-function */
+/* eslint-disable typescript/no-empty-function */
 function a() {}
 function b() {}
 function c() {}
 function d() {}
 function e() {}
-/* eslint-enable no-empty-function */
+/* eslint-enable typescript/no-empty-function */
 
-test(`throws on non-fn`, t => {
-  t.throws(() => grfn([`hi`]), { instanceOf: TypeError })
+test(`throws on non-fn`, () => {
+  expect(() => grfn([`hi` as unknown as Fn])).toThrow(TypeError)
 })
 
-test(`throws on zero vertices`, t => {
-  t.throws(() => grfn([]), {
-    instanceOf: Error,
-    message: `expected 1 output fn: 0`
-  })
+test(`throws on zero vertices`, () => {
+  expect(() => grfn([])).toThrow(new Error(`expected 1 output fn: 0`))
 })
 
-test(`throws on cycle`, t => {
-  t.throws(
-    () =>
-      grfn([
-        [c, [d]],
-        [a, [b, c, d]],
-        [b, [c]],
-        [d, [b, e]],
-        [e, [c]]
-      ]),
-    {
-      instanceOf: Error,
-      message: `expected acyclic: c <- d <- e <- c`
-    }
-  )
+test(`throws on cycle`, () => {
+  expect(() =>
+    grfn([
+      [c, [d]],
+      [a, [b, c, d]],
+      [b, [c]],
+      [d, [b, e]],
+      [e, [c]],
+    ]),
+  ).toThrow(new Error(`expected acyclic: c <- d <- e <- c`))
 })
 
-test(`throws on unknown fn`, t => {
-  t.throws(() => grfn([[c, [d]]]), {
-    instanceOf: Error,
-    message: `expected known fn: d`
-  })
+test(`throws on unknown fn`, () => {
+  expect(() => grfn([[c, [d]]])).toThrow(new Error(`expected known fn: d`))
 })
 
+// eslint-disable-next-line jest/expect-expect
 test(`debug works`, works)

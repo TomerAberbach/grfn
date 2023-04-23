@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+/* eslint-disable typescript/no-explicit-any */
+
 export type Fn = (...args: any) => any
 
 export type Grfn<I extends any[], O> = {
@@ -22,7 +24,7 @@ export type Grfn<I extends any[], O> = {
 }
 
 declare const grfn: <I extends any[], O>(
-  vertices: ReadonlyArray<Fn | [Fn, ReadonlyArray<Fn>]>
-) => Grfn<I, O extends unknown ? any : O>
+  vertices: readonly (Fn | [Fn, readonly Fn[]])[],
+) => Grfn<I, unknown extends O ? any : O>
 
 export default grfn

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`toDot 1`] = `
+"digraph G {
+  node[fontname="monospace"];
+  edge[fontname="monospace"];
+
+  "a";
+  "b";
+  "c";
+  "d";
+
+  "b" -> "a";
+  "c" -> "a";
+  "d" -> "b";
+  "d" -> "c";
+}"
+`;

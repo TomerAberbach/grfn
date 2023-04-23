@@ -16,7 +16,6 @@
 
 import open from 'open'
 import getImage from './get-image.js'
-import gifn from './gifn.js'
 
 export const getSvg = ({ gr: graph }) => getImage({ graph, type: `svg` })
 
@@ -25,13 +24,13 @@ export const getPng = ({ gr: graph }) => getImage({ graph, type: `png` })
 export const previewInBrowser = async grfn => {
   const html = Buffer.concat([
     Buffer.from(
-      `<head><title>grfn</title></head><body style="display: grid; place-items: center; min-height: 100%; margin: 0;">`
+      `<head><title>grfn</title></head><body style="display: grid; place-items: center; min-height: 100%; margin: 0;">`,
     ),
     await getSvg(grfn),
-    Buffer.from(`</body>`)
+    Buffer.from(`</body>`),
   ]).toString(`base64`)
 
   await open(`data:text/html;base64,${html}`)
 }
 
-export { gifn }
+export { default as gifn } from './gifn.js'

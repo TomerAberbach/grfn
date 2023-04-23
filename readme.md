@@ -58,6 +58,8 @@ An illustrative example (with a GIF generated using
 
 <img src="animation.gif" width="350" align="right">
 
+<!-- eslint-skip -->
+
 ```js
 import grfn from 'grfn'
 
@@ -100,7 +102,7 @@ const runTasks = grfn([
   // `taskA` and `taskB` have no dependencies! (But they must still be listed)
   // They take the input given to `runTasks`
   taskA,
-  taskB
+  taskB,
 ])
 
 const output = await runTasks(4, 2, 3)

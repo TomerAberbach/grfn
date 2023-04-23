@@ -25,14 +25,14 @@ const getFrame = async ({ graph, nodeAttributes, edgeAttributes }) => {
     graph,
     type: `png`,
     nodeAttributes,
-    edgeAttributes
+    edgeAttributes,
   })
   const png = new PNG(encodedImage)
   const decodedImage = await new Promise(resolve => png.decode(resolve))
   return {
     width: png.width,
     height: png.height,
-    data: decodedImage
+    data: decodedImage,
   }
 }
 
@@ -71,8 +71,8 @@ const gifn = ({ gr: graph }) => {
           deltas.push(() =>
             nodeAttributes.set(fn, {
               color: `#137DCD`,
-              style: `dashed`
-            })
+              style: `dashed`,
+            }),
           )
 
           const output = await fn(...(args.length === 0 ? input : args))
@@ -80,14 +80,14 @@ const gifn = ({ gr: graph }) => {
           if (fn !== outputFn) {
             edgeAttributes.set(fn, {
               fontcolor: `transparent`,
-              label: String(output)
+              label: String(output),
             })
           }
 
           deltas.push(() => {
             nodeAttributes.set(fn, {
               color: `#9EE37D`,
-              style: `filled`
+              style: `filled`,
             })
             edgeAttributes.set(fn, { color: `#63C132` })
 
@@ -99,7 +99,7 @@ const gifn = ({ gr: graph }) => {
           return fn === outputFn
             ? { deltas, nodeAttributes, edgeAttributes, output }
             : output
-        }
+        },
       )
     }
 
@@ -110,25 +110,25 @@ const gifn = ({ gr: graph }) => {
     input: args,
     deltas: [],
     nodeAttributes: new Map(),
-    edgeAttributes: new Map()
+    edgeAttributes: new Map(),
   })
   const vertices = Array.from(graph.entries(), ([fn, dependencies]) => [
     wrapFn(fn),
-    [getState].concat(dependencies.map(wrapFn))
+    [getState].concat(dependencies.map(wrapFn)),
   ])
   vertices.push([getState, []])
   const run = grfn(vertices)
 
   return async (...args) => {
     const { deltas, nodeAttributes, edgeAttributes, output } = await run(
-      ...args
+      ...args,
     )
     const graphCopy = new Map(graph)
 
     const fakeInputFn = Object.defineProperty(() => args, `name`, {
       enumerable: false,
       writable: false,
-      value: args.map(value => JSON.stringify(value)).join(`, `)
+      value: args.map(value => JSON.stringify(value)).join(`, `),
     })
     nodeAttributes.set(fakeInputFn, { shape: `plaintext` })
     graphCopy.set(fakeInputFn, [])
@@ -140,11 +140,11 @@ const gifn = ({ gr: graph }) => {
     const fakeOutputFn = Object.defineProperty(o => o, `name`, {
       enumerable: false,
       writable: false,
-      value: JSON.stringify(output)
+      value: JSON.stringify(output),
     })
     nodeAttributes.set(fakeOutputFn, {
       shape: `plaintext`,
-      fontcolor: `transparent`
+      fontcolor: `transparent`,
     })
     graphCopy.set(fakeOutputFn, [outputFn])
     edgeAttributes.set(outputFn, { color: `transparent` })
@@ -157,20 +157,20 @@ const gifn = ({ gr: graph }) => {
     const { width, height, data } = await getFrame({
       graph: graphCopy,
       nodeAttributes,
-      edgeAttributes
+      edgeAttributes,
     })
     const frames = [data]
     for (const delta of deltas) {
       delta()
       frames.push(
         (await getFrame({ graph: graphCopy, nodeAttributes, edgeAttributes }))
-          .data
+          .data,
       )
     }
 
     return {
       output,
-      gif: await getGif({ width, height, frames })
+      gif: await getGif({ width, height, frames }),
     }
   }
 }

@@ -42,7 +42,7 @@ validator.validateGraph = graph => {
         () =>
           `acyclic: ${[...explored, fn]
             .map(exploredFn => exploredFn.name)
-            .join(` <- `)}`
+            .join(` <- `)}`,
       )
 
       if (visited.has(fn)) {

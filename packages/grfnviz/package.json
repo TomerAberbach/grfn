@@ -44,6 +44,9 @@
   "exports": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./src/index.d.ts",
+  "scripts": {
+    "test": "tomer test"
+  },
   "dependencies": {
     "@hpcc-js/wasm": "1.0.1",
     "gifencoder": "2.0.1",
@@ -51,5 +54,8 @@
     "grfn": "1.0.0",
     "open": "7.3.1",
     "png-js": "1.0.0"
+  },
+  "devDependencies": {
+    "tomer": "^2.0.0"
   }
 }

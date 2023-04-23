@@ -14,52 +14,61 @@
  * limitations under the License.
  */
 
+/* eslint-disable no-restricted-syntax */
+
 import grfn from '../../src/index.js'
 
-const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
+const delay = (timeout: number) =>
+  new Promise(resolve => setTimeout(resolve, timeout))
 
-export const works = async t => {
-  const values = []
+export const works = async (): Promise<void> => {
+  const values: unknown[] = []
 
-  async function l(x, y) {
+  async function l(x: number, y: number) {
     values.push([`l`, x, y])
     await delay(2)
     return x + y
   }
 
-  async function m(x, y) {
+  async function m(x: number, y: number) {
     await delay(4)
     values.push([`m`, x, y])
     return 2 * x + 3 * y
   }
 
-  async function n(x) {
+  async function n(x: number) {
     values.push([`n`, x])
     await delay(3)
     return x * 2
   }
 
-  async function o(x, y, z) {
+  async function o(x: number, y: number, z: number) {
     values.push([`o`, x, y, z])
     await delay(1)
     return x + y + z
   }
 
-  async function p(x) {
+  async function p(x: number) {
     values.push([`p`, x])
     await delay(1)
     return x * 2
   }
 
-  const fn = grfn([[o, [l, n, p]], [n, [m]], m, [p, [l]], l])
+  const fn = grfn<[number, number], number>([
+    [o, [l, n, p]],
+    [n, [m]],
+    m,
+    [p, [l]],
+    l,
+  ])
   const result = await fn(1, 2)
 
-  t.deepEqual(values, [
+  expect(values).toStrictEqual([
     [`l`, 1, 2],
     [`p`, 3],
     [`m`, 1, 2],
     [`n`, 8],
-    [`o`, 3, 16, 6]
+    [`o`, 3, 16, 6],
   ])
-  t.is(result, 25)
+  expect(result).toBe(25)
 }

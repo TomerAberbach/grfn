@@ -27,7 +27,7 @@ const getImage = ({ graph, type, nodeAttributes, edgeAttributes }) => {
   for (const fn of graph.keys()) {
     digraph.addNode(
       getFnName(fn),
-      (nodeAttributes && nodeAttributes.get(fn)) || {}
+      (nodeAttributes && nodeAttributes.get(fn)) || {},
     )
   }
 
@@ -36,7 +36,7 @@ const getImage = ({ graph, type, nodeAttributes, edgeAttributes }) => {
       digraph.addEdge(
         getFnName(dependency),
         getFnName(fn),
-        (edgeAttributes && edgeAttributes.get(dependency)) || {}
+        (edgeAttributes && edgeAttributes.get(dependency)) || {},
       )
     }
   }
@@ -47,12 +47,12 @@ const getImage = ({ graph, type, nodeAttributes, edgeAttributes }) => {
         type,
         G: {
           size: `10,10!`,
-          center: `true`
-        }
+          center: `true`,
+        },
       },
       resolve,
-      reject
-    )
+      reject,
+    ),
   )
 }
 

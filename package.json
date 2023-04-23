@@ -32,18 +32,13 @@
   "engines": {
     "node": ">= 12.17"
   },
-  "browserslist": [
-    "defaults",
-    "not IE 11",
-    "not op_mini all"
-  ],
   "exports": {
     ".": {
-      "types":"./src/index.d.ts",
+      "types": "./src/index.d.ts",
       "import": "./dist/index.js"
     },
     "./debug": {
-      "types":"./src/debug.d.ts",
+      "types": "./src/debug.d.ts",
       "import": "./dist/debug.js"
     },
     "./package.json": "./package.json"
@@ -51,64 +46,20 @@
   "module": "./dist/index.js",
   "types": "./src/index.d.ts",
   "scripts": {
-    "license": "addlicense $(git diff --name-only HEAD)",
-    "prepare": "pnpx --no-install simple-git-hooks",
-    "lint:prettier:base": "prettier --loglevel silent --ignore-path .gitignore",
-    "lint:prettier": "run-s \"lint:prettier:base -- --write .\"",
-    "lint:eslint:base": "eslint --cache --ext js --ignore-path .gitignore",
-    "lint:eslint": "run-s \"lint:eslint:base -- --fix .\"",
-    "lint": "run-s lint:*",
-    "test:js": "ava",
-    "test:ts": "tsd",
-    "test": "run-s test:*",
-    "coverage": "c8 run-s test:js",
+    "prepare": "tomer install",
+    "format": "tomer format",
+    "lint": "tomer lint",
+    "typecheck": "tomer typecheck",
+    "test": "tomer test",
     "build": "node build.js",
-    "prepublishOnly": "run-s lint build"
+    "clean": "tomer clean dist",
+    "prepublishOnly": "npm run build"
   },
-  "prettier": "@tomer/prettier-config",
-  "eslintConfig": {
-    "extends": "@tomer"
-  },
-  "lint-staged": {
-    "*.js": [
-      "addlicense",
-      "run-s \"lint:prettier:base -- --write {@}\" --",
-      "run-s \"lint:eslint:base -- --fix {@}\" --"
-    ],
-    "*.ts": [
-      "addlicense",
-      "run-s \"lint:prettier:base -- --write {@}\" --"
-    ],
-    "*.{json,yml,md}": "run-s \"lint:prettier:base -- --write {@}\" --"
-  },
-  "tsd": {
-    "directory": "./test"
-  },
-  "commitlint": {
-    "extends": "@commitlint/config-conventional"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpx --no-install lint-staged",
-    "commit-msg": "pnpx --no-install commitlint -e"
-  },
+  "prettier": "tomer/prettier",
   "devDependencies": {
-    "@commitlint/cli": "12.1.4",
-    "@commitlint/config-conventional": "12.1.4",
-    "@tomer/eslint-config": "0.1.1",
-    "@tomer/prettier-config": "0.1.0",
-    "@types/node": "15.9.0",
-    "ava": "3.15.0",
-    "ava-fast-check": "4.0.2",
-    "c8": "7.7.2",
-    "eslint": "7.27.0",
-    "fast-check": "2.16.0",
-    "get-all-files": "4.0.0",
-    "lint-staged": "11.0.0",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.3.0",
-    "simple-git-hooks": "2.4.1",
-    "terser": "5.7.0",
-    "tsd": "0.16.0",
-    "typescript": "4.3.2"
+    "@types/jest": "^29.5.1",
+    "get-all-files": "^4.1.0",
+    "terser": "^5.17.1",
+    "tomer": "^2.0.0"
   }
 }

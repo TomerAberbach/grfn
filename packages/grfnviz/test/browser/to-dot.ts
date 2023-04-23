@@ -14,19 +14,21 @@
  * limitations under the License.
  */
 
-import test from 'ava'
+/* eslint-disable no-restricted-syntax */
+
 import grfn from '../../../../src/index.js'
 import toDot from '../../src/browser/to-dot.js'
 
-/* eslint-disable no-empty-function */
+/* eslint-disable typescript/no-empty-function */
 function a() {}
 function b() {}
 function c() {}
 function d() {}
-/* eslint-enable no-empty-function */
+/* eslint-enable typescript/no-empty-function */
 
 const run = grfn([[a, [b, c]], [b, [d]], [c, [d]], d])
 
-test(`toDot`, t => {
-  t.snapshot(toDot({ graph: run.gr }))
+test(`toDot`, () => {
+  // eslint-disable-next-line
+  expect((toDot as any)({ graph: (run as any).gr })).toMatchSnapshot()
 })

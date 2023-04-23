@@ -17,7 +17,7 @@
 import createGetFnName from '../create-get-fn-name.js'
 
 const quote = string =>
-  `"${string.replace(/"/gu, `\\"`).replace(/\n/gu, `\\n`)}"`
+  `"${string.replaceAll(`"`, `\\"`).replace(/\n/gu, `\\n`)}"`
 
 const serializeAttributes = attributes => {
   const entries = Object.entries(attributes)
@@ -39,18 +39,18 @@ const toDot = ({ graph, nodeAttributes, edgeAttributes }) => {
 
   let dot = `digraph G {`
   dot += serializeStatement(
-    `node${serializeAttributes({ fontname: `monospace` })}`
+    `node${serializeAttributes({ fontname: `monospace` })}`,
   )
   dot += serializeStatement(
-    `edge${serializeAttributes({ fontname: `monospace` })}`
+    `edge${serializeAttributes({ fontname: `monospace` })}`,
   )
 
   dot += `\n`
   for (const fn of graph.keys()) {
     dot += serializeStatement(
       `${getNodeName(fn)}${serializeAttributes(
-        (nodeAttributes && nodeAttributes.get(fn)) || {}
-      )}`
+        (nodeAttributes && nodeAttributes.get(fn)) || {},
+      )}`,
     )
   }
 
@@ -59,8 +59,8 @@ const toDot = ({ graph, nodeAttributes, edgeAttributes }) => {
     for (const dependency of dependencies) {
       dot += serializeStatement(
         `${getNodeName(dependency)} -> ${getNodeName(fn)}${serializeAttributes(
-          (edgeAttributes && edgeAttributes.get(dependency)) || {}
-        )}`
+          (edgeAttributes && edgeAttributes.get(dependency)) || {},
+        )}`,
       )
     }
   }

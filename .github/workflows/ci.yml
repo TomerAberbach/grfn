@@ -17,19 +17,32 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  skip_check:
+    name: Skip Check
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          cancel_others: 'true'
+          skip_after_successful_duplicate: 'true'
+          concurrent_skipping: 'same_content_newer'
+
   test:
     name: Node.js v${{ matrix.nodejs }} (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        nodejs: [12, 14]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        nodejs: [16]
+        os: [ubuntu-latest, macOS-latest]
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodejs }}
 
@@ -39,5 +52,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Format
+        run: pnpm format -- --no-write
+
+      - name: Lint
+        run: pnpm lint -- --no-fix
+
+      - name: Typecheck
+        run: pnpm typecheck
+
       - name: Test
-        run: pnpm test
+        run: pnpm test -- --coverage

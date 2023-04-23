@@ -29,7 +29,7 @@ const createResolver = () => {
 const grfn = vertices => {
   const graph = new Map()
   for (const vertex of vertices) {
-    const [fn, dependencies = []] = [].concat(vertex)
+    const [fn, dependencies = []] = [vertex].flat()
     graph.set(fn, [...dependencies])
   }
 
@@ -45,7 +45,7 @@ const grfn = vertices => {
       Promise.all(
         dependencies.length === 0
           ? inputs
-          : dependencies.map(dependency => resolvers.get(dependency).prom)
+          : dependencies.map(dependency => resolvers.get(dependency).prom),
       )
         .then(args => resolvers.get(fn).res(fn(...args)))
         .catch(error => resolvers.get(fn).rej(error))

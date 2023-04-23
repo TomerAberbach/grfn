@@ -25,5 +25,5 @@ export default {
     }
 
     return leafFns.values().next().value
-  }
+  },
 }
