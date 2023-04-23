@@ -25,7 +25,8 @@
   "license": "Apache-2.0",
   "files": [
     "dist",
-    "src/index.d.ts"
+    "src/index.d.ts",
+    "src/debug.d.ts"
   ],
   "type": "module",
   "engines": {
@@ -36,7 +37,17 @@
     "not IE 11",
     "not op_mini all"
   ],
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types":"./src/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./debug": {
+      "types":"./src/debug.d.ts",
+      "import": "./dist/debug.js"
+    },
+    "./package.json": "./package.json"
+  },
   "module": "./dist/index.js",
   "types": "./src/index.d.ts",
   "scripts": {
