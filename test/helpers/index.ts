@@ -15,7 +15,6 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-
 import grfn from '../../src/index.js'
 
 const delay = (timeout: number) =>

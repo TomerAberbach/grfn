@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import { dirname, join, relative } from 'path'
-import { gzip as gzipCb } from 'zlib'
 import { promises as fs } from 'fs'
-import { promisify } from 'util'
-import { minify } from 'terser'
 import { getAllFiles } from 'get-all-files'
-import grfn from './src/index.js'
+import { dirname, join, relative } from 'path'
+import { minify } from 'terser'
+import { promisify } from 'util'
+import { gzip as gzipCb } from 'zlib'
 import './src/debug.js'
+import grfn from './src/index.js'
 
 const gzip = promisify(gzipCb)
 

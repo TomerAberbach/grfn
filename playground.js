@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import grfn from './src/index.js'
 import './src/debug.js'
+import grfn from './src/index.js'
 
 const delay = timeout => new Promise(resolve => setTimeout(resolve, timeout))
 const withLogging = fn =>

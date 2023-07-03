@@ -56,6 +56,6 @@
     "png-js": "1.0.0"
   },
   "devDependencies": {
-    "tomer": "^2.0.0"
+    "tomer": "^2.0.7"
   }
 }

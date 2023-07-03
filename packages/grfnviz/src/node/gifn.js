@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-import PNG from 'png-js'
 import GIFEncoder from 'gifencoder'
 import grfn from 'grfn'
-import { getInputFns, getOutputFn } from './graph.js'
+import PNG from 'png-js'
 import getImage from './get-image.js'
+import { getInputFns, getOutputFn } from './graph.js'
 
 const getFrame = async ({ graph, nodeAttributes, edgeAttributes }) => {
   const encodedImage = await getImage({

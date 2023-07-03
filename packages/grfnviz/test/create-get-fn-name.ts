@@ -15,7 +15,6 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-
 import { fc, testProp } from 'tomer'
 import createGetFnName from '../src/create-get-fn-name.js'
 

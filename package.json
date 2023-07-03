@@ -57,9 +57,9 @@
   },
   "prettier": "tomer/prettier",
   "devDependencies": {
-    "@types/jest": "^29.5.1",
+    "@types/jest": "^29.5.2",
     "get-all-files": "^4.1.0",
-    "terser": "^5.17.1",
-    "tomer": "^2.0.0"
+    "terser": "^5.18.2",
+    "tomer": "^2.0.7"
   }
 }

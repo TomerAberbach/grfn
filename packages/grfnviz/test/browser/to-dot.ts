@@ -15,7 +15,6 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-
 import grfn from '../../../../src/index.js'
 import toDot from '../../src/browser/to-dot.js'
 

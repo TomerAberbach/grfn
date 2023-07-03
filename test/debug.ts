@@ -15,9 +15,8 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-
-import grfn, { type Fn } from '../src/index.js'
 import '../src/debug.js'
+import grfn, { type Fn } from '../src/index.js'
 import { works } from './helpers/index.js'
 
 /* eslint-disable typescript/no-empty-function */

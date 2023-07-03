@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 import createGetFnName from '../create-get-fn-name.js'
 
 const quote = string =>
-  `"${string.replaceAll(`"`, `\\"`).replace(/\n/gu, `\\n`)}"`
+  `"${string.replaceAll(`"`, `\\"`).replaceAll(`\n`, `\\n`)}"`
 
 const serializeAttributes = attributes => {
   const entries = Object.entries(attributes)

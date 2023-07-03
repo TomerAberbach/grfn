@@ -15,7 +15,6 @@
  */
 
 /* eslint-disable no-restricted-syntax, typescript/require-await */
-
 import { expectTypeOf } from 'tomer'
 import grfn from '../src/index.js'
 import type { Grfn } from '../src/index.js'
