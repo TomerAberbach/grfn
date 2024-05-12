@@ -33,36 +33,35 @@ const withLogging = fn =>
     },
   )
 
-const taskA = withLogging(async (n1, n2, n3) => {
-  await delay(15)
-  return n1 + n2 + n3
+const fn = grfn({
+  e: [
+    withLogging(async (a, c, d) => {
+      await delay(10)
+      return a * c * d
+    }),
+    [`a`, `c`, `d`],
+  ],
+  d: [
+    withLogging(async b => {
+      await delay(1)
+      return b * 2
+    }),
+    [`b`],
+  ],
+  c: [
+    withLogging(async (a, b) => {
+      await delay(5)
+      return a + b
+    }),
+    [`a`, `b`],
+  ],
+  a: withLogging(async (n1, n2, n3) => {
+    await delay(15)
+    return n1 + n2 + n3
+  }),
+  b: withLogging(async (n1, n2, n3) => {
+    await delay(10)
+    return n1 * n2 * n3
+  }),
 })
-
-const taskB = withLogging(async (n1, n2, n3) => {
-  await delay(10)
-  return n1 * n2 * n3
-})
-
-const taskC = withLogging(async (a, b) => {
-  await delay(5)
-  return a + b
-})
-
-const taskD = withLogging(async b => {
-  await delay(1)
-  return b * 2
-})
-
-const taskE = withLogging(async (a, c, d) => {
-  await delay(10)
-  return a * c * d
-})
-
-const runTasks = grfn({
-  e: [taskE, [`a`, `c`, `d`]],
-  d: [taskD, [`b`]],
-  c: [taskC, [`a`, `b`]],
-  a: taskA,
-  b: taskB,
-})
-await runTasks(1, 2, 3)
+await fn(1, 2, 3)
