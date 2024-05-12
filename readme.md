@@ -31,9 +31,8 @@
 - **Unobtrusive and Unopinionated:** takes normal functions; returns a normal
   function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides type-level cycle detection as well as PNG, SVG,
-  and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz)
-  package!
+- **Easy Debugging:** provides type-level validation of the input graph,
+  including cycle detection!
 - **Awesome Logo:** designed by [Jill Marbach](https://jillmarbach.com)!
 
 ## Table of Contents
@@ -51,9 +50,6 @@ $ npm i grfn
 ```
 
 ## Usage
-
-An illustrative example (with a GIF generated using
-[`grfnviz`](packages/grfnviz)!):
 
 <img src="animation.gif" width="350" align="right">
 
@@ -118,9 +114,6 @@ final output: 14256
 
 The graph will be automatically validated, including cycle detection, via
 TypeScript magic!
-
-To generate previews and GIFs (like above!) use the
-[`grfnviz` package](packages/grfnviz)!
 
 ## API
 
