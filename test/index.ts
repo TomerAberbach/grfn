@@ -15,47 +15,48 @@
  */
 
 /* eslint-disable no-restricted-syntax */
+
+import { setTimeout } from 'node:timers/promises'
 import grfn from '../src/index.js'
 
 test(`grfn works`, async () => {
   const values: unknown[] = []
 
-  async function l(x: number, y: number) {
-    values.push([`l`, x, y])
-    await delay(2)
-    return x + y
-  }
-
-  async function m(x: number, y: number) {
-    await delay(4)
-    values.push([`m`, x, y])
-    return 2 * x + 3 * y
-  }
-
-  async function n(x: number) {
-    values.push([`n`, x])
-    await delay(3)
-    return x * 2
-  }
-
-  async function o(x: number, y: number, z: number) {
-    values.push([`o`, x, y, z])
-    await delay(1)
-    return x + y + z
-  }
-
-  async function p(x: number) {
-    values.push([`p`, x])
-    await delay(1)
-    return x * 2
-  }
-
   const fn = grfn({
-    o: [o, [`l`, `n`, `p`]],
-    n: [n, [`m`]],
-    m,
-    p: [p, [`l`]],
-    l,
+    o: [
+      async (x: number, y: number, z: number) => {
+        values.push([`o`, x, y, z])
+        await setTimeout(1)
+        return x + y + z
+      },
+      [`l`, `n`, `p`],
+    ],
+    n: [
+      async (x: number) => {
+        values.push([`n`, x])
+        await setTimeout(3)
+        return x * 2
+      },
+      [`m`],
+    ],
+    m: async (x: number, y: number) => {
+      await setTimeout(4)
+      values.push([`m`, x, y])
+      return 2 * x + 3 * y
+    },
+    p: [
+      async (x: number) => {
+        values.push([`p`, x])
+        await setTimeout(1)
+        return x * 2
+      },
+      [`l`],
+    ],
+    l: async (x: number, y: number) => {
+      values.push([`l`, x, y])
+      await setTimeout(2)
+      return x + y
+    },
   })
   const result = await fn(1, 2)
 
@@ -69,5 +70,12 @@ test(`grfn works`, async () => {
   expect(result).toBe(25)
 })
 
-const delay = (timeout: number) =>
-  new Promise(resolve => setTimeout(resolve, timeout))
+test(`grfn propagates errors`, async () => {
+  const fn = grfn({
+    x: (arg: string) => {
+      throw new Error(arg)
+    },
+  })
+
+  await expect(() => fn(`BOOM!`)).rejects.toStrictEqual(new Error(`BOOM!`))
+})

@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-/* eslint-disable no-restricted-syntax */
 import grfn from '../../../../src/index.js'
 import toDot from '../../src/browser/to-dot.js'
 
-/* eslint-disable typescript/no-empty-function */
-function a() {}
-function b() {}
-function c() {}
-function d() {}
-/* eslint-enable typescript/no-empty-function */
-
-const run = grfn([[a, [b, c]], [b, [d]], [c, [d]], d])
+const run = grfn({
+  a: [(arg1: number, arg2: number) => arg1 + arg2, [`b`, `c`]],
+  b: [(arg: number) => arg * 2, [`d`]],
+  c: [(arg: number) => arg * 3, [`d`]],
+  d: (arg: number) => arg * 4,
+})
 
 test(`toDot`, () => {
-  expect((toDot as any)({ graph: (run as any).gr })).toMatchSnapshot()
+  // @ts-expect-error Untyped.
+  // eslint-disable-next-line typescript/no-unsafe-assignment
+  expect(toDot({ graph: run.gr })).toMatchSnapshot()
 })
