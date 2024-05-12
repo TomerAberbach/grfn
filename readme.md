@@ -13,8 +13,11 @@
   <a href="https://github.com/TomerAberbach/grfn/actions">
     <img src="https://github.com/TomerAberbach/grfn/workflows/CI/badge.svg" alt="CI" />
   </a>
-  <a href="https://bundlephobia.com/result?p=grfn">
-    <img src="https://badgen.net/bundlephobia/minzip/grfn" alt="minzip size" />
+  <a href="https://unpkg.com/grfn/dist/index.min.js">
+    <img src="https://deno.bundlejs.com/?q=grfn&badge" alt="gzip size" />
+  </a>
+  <a href="https://unpkg.com/grfn/dist/index.min.js">
+    <img src="https://deno.bundlejs.com/?q=grfn&config={%22compression%22:{%22type%22:%22brotli%22}}&badge" alt="brotli size" />
   </a>
 </div>
 
