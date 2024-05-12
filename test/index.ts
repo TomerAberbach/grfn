@@ -17,7 +17,46 @@
 /* eslint-disable no-restricted-syntax */
 
 import { setTimeout } from 'node:timers/promises'
+import { expectTypeOf } from 'tomer'
 import grfn from '../src/index.js'
+
+test.skip(`grfn types`, () => {
+  expectTypeOf(grfn({})).toEqualTypeOf<(...args: never) => Promise<never>>()
+  expectTypeOf(grfn({ a: (arg: number) => arg })).toEqualTypeOf<
+    (arg: number) => Promise<number>
+  >()
+  expectTypeOf(
+    grfn({ a: (arg: number) => Promise.resolve(arg) }),
+  ).toEqualTypeOf<(arg: number) => Promise<number>>()
+  expectTypeOf(grfn({ a: [(arg: number) => arg] })).toEqualTypeOf<
+    (arg: number) => Promise<number>
+  >()
+  expectTypeOf(grfn({ a: [(arg: number) => arg, []] })).toEqualTypeOf<
+    (arg: number) => Promise<number>
+  >()
+  expectTypeOf(
+    grfn({
+      a: [(a: number, b: number) => `${a + b}`, [`b`, `c`]],
+      b: (arg: number) => arg * 2,
+      c: (arg1: number, arg2: number) => arg1 * arg2,
+    }),
+  ).toEqualTypeOf<(arg1: number, arg2: number) => Promise<string>>()
+
+  grfn({
+    // @ts-expect-error Incompatible input parameters.
+    a: [(arg1: number, arg2: string) => arg1 + arg2, [`b`, `c`]],
+    b: (arg: number) => arg,
+    c: (arg: string) => arg,
+  })
+  // @ts-expect-error Undefined vertex.
+  grfn({ a: [(arg: number) => arg, [`b`]] })
+  // @ts-expect-error More than one output vertex.
+  grfn({ a: (arg: number) => arg, b: (arg: number) => arg })
+  // @ts-expect-error Cycle.
+  grfn({ a: [(arg: number) => arg, [`b`]], b: [(arg: number) => arg, [`a`]] })
+  // @ts-expect-error Parameters mismatching dependencies.
+  grfn({ a: [(arg: string) => arg, [`b`]], b: (arg: number) => arg })
+})
 
 test(`grfn works`, async () => {
   const values: unknown[] = []

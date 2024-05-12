@@ -18,8 +18,6 @@
 
 import type { Join, Simplify, UnionToIntersection } from 'type-fest'
 
-export type Fn = (...args: any) => any
-
 declare const grfn: <const Entries extends VertexEntries>(
   vertices: CheckVertices<Entries>,
 ) => (
@@ -124,7 +122,7 @@ type GetKeysMismatchingDependencyOutputs<Entries extends VertexEntries> =
     {
       [Key in keyof Entries]: GetEntryDependencyKeysArray<
         Entries[Key]
-      > extends never
+      > extends readonly []
         ? never
         : GetFunction<Entries, Key> extends (
               ...args: GetOutputs<
@@ -174,7 +172,8 @@ type GetFunction<
       : never
     : never
 
-type VertexEntry = Fn | readonly [Fn, (readonly string[])?]
-type VertexEntries = Readonly<Record<string, VertexEntry>>
+export type Fn = (...args: any) => any
+export type VertexEntry = Fn | readonly [Fn, (readonly string[])?]
+export type VertexEntries = Readonly<Record<string, VertexEntry>>
 
 export default grfn
