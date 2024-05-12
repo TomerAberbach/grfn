@@ -147,7 +147,7 @@ const gifn = ({ gr: graph }) => {
     })
     graphCopy.set(fakeOutputFn, [outputFn])
     edgeAttributes.set(outputFn, { color: `transparent` })
-    const oldDelta = deltas[deltas.length - 1]
+    const oldDelta = deltas.at(-1)
     deltas[deltas.length - 1] = () => {
       oldDelta()
       nodeAttributes.set(fakeOutputFn, { shape: `plaintext` })

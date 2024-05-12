@@ -19,18 +19,18 @@
 </div>
 
 <div align="center">
-  A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.
+  A tiny (~320B) utility that executes a dependency graph of async functions as concurrently as possible.
 </div>
 
 ## Features
 
-- **Lightweight:** less than 400 bytes gzipped
-- **Unobtrusive and Unopiniated:** takes normal functions; returns a normal
+- **Lightweight:** ~320 bytes gzipped
+- **Unobtrusive and Unopinionated:** takes normal functions; returns a normal
   function!
 - **Isomorphic:** works in node and the browser
-- **Easy Debugging:** provides cycle detection through a `grfn/debug` module as
-  well as PNG, SVG, and GIF dependency graph previews through the
-  [`grfnviz`](packages/grfnviz) package!
+- **Easy Debugging:** provides type-level cycle detection as well as PNG, SVG,
+  and GIF dependency graph previews through the [`grfnviz`](packages/grfnviz)
+  package!
 - **Awesome Logo:** designed by [Jill Marbach](https://jillmarbach.com)!
 
 ## Table of Contents
@@ -48,10 +48,6 @@ $ npm i grfn
 ```
 
 ## Usage
-
-Check out `grfn`'s very own
-[build file](https://github.com/TomerAberbach/grfn/blob/main/build.js) for a
-real world usage example!
 
 An illustrative example (with a GIF generated using
 [`grfnviz`](packages/grfnviz)!):
@@ -90,20 +86,20 @@ async function taskE(a, c, d) {
   return a * c * d
 }
 
-const runTasks = grfn([
+const runTasks = grfn({
   // `taskE` depends on `taskA`, `taskC`, and `taskD`
   // Call `taskE` with the results of the functions
   // once their returned promises resolve
-  [taskE, [taskA, taskC, taskD]],
+  e: [taskE, [`a`, `c`, `d`]],
 
-  [taskD, [taskB]], // `taskD` depends on `taskB`
-  [taskC, [taskA, taskB]], // `taskC` depends on `taskA` and `taskB`
+  d: [taskD, [`b`]], // `taskD` depends on `taskB`
+  c: [taskC, [`a`, `b`]], // `taskC` depends on `taskA` and `taskB`
 
   // `taskA` and `taskB` have no dependencies! (But they must still be listed)
   // They take the input given to `runTasks`
-  taskA,
-  taskB,
-])
+  a: taskA,
+  b: taskB,
+})
 
 const output = await runTasks(4, 2, 3)
 
@@ -120,13 +116,8 @@ final output: 14256
 
 ### Debugging
 
-To enable cycle detection and other validation import `grfn/debug` in addition
-to `grfn`:
-
-```js
-import grfn from 'grfn'
-import 'grfn/debug'
-```
+Your graph will be automatically validated, including cycle detection, via
+TypeScript magic!
 
 To generate previews and GIFs (like above!) use the
 [`grfnviz` package](packages/grfnviz)!
@@ -144,74 +135,74 @@ Returns a function that runs the dependency graph of functions described by
 
 #### `vertices`
 
-Type: `(Function | [Function, Function[]])[]`
+Type: `{ [key: string]: Function | [Function, string[]] }`
 
-An array describing a dependency graph of functions.
+An object describing a dependency graph of functions.
 
 Each value in `vertices` must be either:
 
-- A pair containing a function and its array of function dependencies (e.g.
-  `[fnA, [fnB, fnC]]`)
+- A pair containing a function and its array of dependencies by key (e.g.
+  `[fnA, ['keyB', 'keyC']]`)
 - Or a function (equivalent to `[fn, []]`)
 
-The following constraints, which are verified when `grfn/debug` is imported
-before calling `grfn`, must also be met:
+The following constraints, which are validate via TypeScript magic, must also be
+met:
 
 - Each dependency in `vertices` must also appear as a non-dependency:
-  - Not okay (`fnB` doesn't appear as a non-dependency):
+  - Not okay (`b` doesn't appear as a non-dependency):
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnA, [fnB]]
-    ])
+    grfn({
+      a: [fnA, [`b`]],
+    })
     ```
   - Okay:
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnA, [fnB]],
-      fnB
-    ])
+    grfn({
+      a: [fnA, [`b`]],
+      b: fnB,
+    })
     ```
 - `vertices` must describe an
   [acyclic](https://en.wikipedia.org/wiki/Directed_acyclic_graph) dependency
   graph:
-  - Not okay (cycle: `fnA -> fnB -> fnA`):
+  - Not okay (cycle: `a -> b -> a`):
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnA, [fnB]],
-      [fnB, [fnA]]
-    ])
+    grfn({
+      a: [fnA, [`b`]],
+      b: [fnB, [`a`]],
+    })
     ```
   - Okay:
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnA, [fnB]],
-      fnB
-    ])
+    grfn({
+      a: [fnA, [`b`]],
+      b: fnB,
+    })
     ```
 - `vertices` must have exactly one _output function_, a function that is not
   depended on by any function:
-  - Not okay (both `fnB` and `fnC` are not depended on by any function):
+  - Not okay (both `b` and `c` are not depended on by any function):
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnB, [fnA]],
-      [fnC, [fnA]],
-      fnA
-    ])
+    grfn({
+      b: [fnB, [`a`]],
+      c: [fnC, [`a`]],
+      a: fnA,
+    })
     ```
   - Okay:
     <!-- prettier-ignore -->
     ```js
-    grfn([
-      [fnD, [fnB, fnC]],
-      [fnB, [fnA]],
-      [fnC, [fnA]],
-      fnA
-    ])
+    grfn({
+      d: [fnD, [`b`, `c`]],
+      b: [fnB, [`a`]],
+      c: [fnC, [`a`]],
+      a: fnA,
+    })
     ```
 
 ## Contributing

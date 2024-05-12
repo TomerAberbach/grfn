@@ -15,12 +15,9 @@
  */
 
 /* eslint-disable no-restricted-syntax */
-import grfn from '../../src/index.js'
+import grfn from '../src/index.js'
 
-const delay = (timeout: number) =>
-  new Promise(resolve => setTimeout(resolve, timeout))
-
-export const works = async (): Promise<void> => {
+test(`grfn works`, async () => {
   const values: unknown[] = []
 
   async function l(x: number, y: number) {
@@ -53,13 +50,13 @@ export const works = async (): Promise<void> => {
     return x * 2
   }
 
-  const fn = grfn<[number, number], number>([
-    [o, [l, n, p]],
-    [n, [m]],
+  const fn = grfn({
+    o: [o, [`l`, `n`, `p`]],
+    n: [n, [`m`]],
     m,
-    [p, [l]],
+    p: [p, [`l`]],
     l,
-  ])
+  })
   const result = await fn(1, 2)
 
   expect(values).toStrictEqual([
@@ -70,4 +67,7 @@ export const works = async (): Promise<void> => {
     [`o`, 3, 16, 6],
   ])
   expect(result).toBe(25)
-}
+})
+
+const delay = (timeout: number) =>
+  new Promise(resolve => setTimeout(resolve, timeout))

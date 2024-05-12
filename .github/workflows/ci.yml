@@ -26,7 +26,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        nodejs: [16]
+        nodejs: [18, 20]
         os: [ubuntu-latest, macOS-latest]
       fail-fast: false
     steps:
@@ -53,4 +53,4 @@ jobs:
         run: pnpm typecheck
 
       - name: Test
-        run: pnpm test
+        run: pnpm test -- --coverage

@@ -28,6 +28,5 @@ function d() {}
 const run = grfn([[a, [b, c]], [b, [d]], [c, [d]], d])
 
 test(`toDot`, () => {
-  // eslint-disable-next-line
   expect((toDot as any)({ graph: (run as any).gr })).toMatchSnapshot()
 })

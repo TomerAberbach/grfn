@@ -101,7 +101,7 @@ await fs.writeFile(gif, `myfancygraphrun.gif`)
 <img src="https://raw.githubusercontent.com/TomerAberbach/grfn/main/preview.png" width="350" align="right">
 
 ```js
-import { promises as fs } from 'fs'
+import { promises as fs } from 'node:fs'
 import grfn from 'grfn'
 import { getPng, getSvg, gifn, previewInBrowser } from 'grfnviz'
 
