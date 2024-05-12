@@ -22,12 +22,12 @@
 </div>
 
 <div align="center">
-  A tiny (~320B) utility that executes a dependency graph of async functions as concurrently as possible.
+  A tiny (~315B) utility that executes a dependency graph of async functions as concurrently as possible.
 </div>
 
 ## Features
 
-- **Lightweight:** ~320 bytes gzipped
+- **Lightweight:** ~315 bytes gzipped
 - **Unobtrusive and Unopinionated:** takes normal functions; returns a normal
   function!
 - **Isomorphic:** works in node and the browser

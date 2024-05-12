@@ -29,7 +29,7 @@ const grfn = vertices => {
   }
   const outputKey = leafKeys.values().next().value
 
-  const returnedFn = (...inputs) => {
+  return (...inputs) => {
     const deferreds = new Map()
     for (const key of graph.keys()) {
       deferreds.set(key, deferred())
@@ -47,9 +47,6 @@ const grfn = vertices => {
 
     return deferreds.get(outputKey)._promise
   }
-
-  returnedFn.gr = graph
-  return returnedFn
 }
 
 const deferred = () => {
