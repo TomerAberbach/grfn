@@ -19,6 +19,9 @@
   <a href="https://unpkg.com/grfn/dist/index.min.js">
     <img src="https://deno.bundlejs.com/?q=grfn&config={%22compression%22:{%22type%22:%22brotli%22}}&badge" alt="brotli size" />
   </a>
+  <a href="https://licenses.dev/npm/grfn">
+    <img src="https://licenses.dev/b/npm/grfn" alt="licenses" />
+  </a>
 </div>
 
 <div align="center">
