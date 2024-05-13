@@ -13,48 +13,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import validator from './v.js'
-
-const createResolver = () => {
-  let res
-  let rej
-  const prom = new Promise((resolve, reject) => {
-    res = resolve
-    rej = reject
-  })
-  return { prom, res, rej }
-}
 
 const grfn = vertices => {
   const graph = new Map()
-  for (const vertex of vertices) {
+  for (const [key, vertex] of Object.entries(vertices)) {
     const [fn, dependencies = []] = [vertex].flat()
-    graph.set(fn, [...dependencies])
+    graph.set(key, [fn, [...dependencies]])
   }
 
-  const outputFn = validator.validateGraph(graph)
+  const leafKeys = new Set(graph.keys())
+  for (const [, dependencies] of graph.values()) {
+    for (const dependency of dependencies) {
+      leafKeys.delete(dependency)
+    }
+  }
+  const outputKey = leafKeys.values().next().value
 
-  const returnedFn = (...inputs) => {
-    const resolvers = new Map()
-    for (const fn of graph.keys()) {
-      resolvers.set(fn, createResolver())
+  return (...inputs) => {
+    const deferreds = new Map()
+    for (const key of graph.keys()) {
+      deferreds.set(key, deferred())
     }
 
-    for (const [fn, dependencies] of graph.entries()) {
+    for (const [key, [fn, dependencies]] of graph) {
       Promise.all(
         dependencies.length === 0
           ? inputs
-          : dependencies.map(dependency => resolvers.get(dependency).prom),
+          : dependencies.map(dependency => deferreds.get(dependency)._promise),
       )
-        .then(args => resolvers.get(fn).res(fn(...args)))
-        .catch(error => resolvers.get(fn).rej(error))
+        .then(args => deferreds.get(key)._resolve(fn(...args)))
+        .catch(error => deferreds.get(key)._reject(error))
     }
 
-    return resolvers.get(outputFn).prom
+    return deferreds.get(outputKey)._promise
   }
+}
 
-  returnedFn.gr = graph
-  return returnedFn
+const deferred = () => {
+  let resolve
+  let reject
+  const promise = new Promise((res, rej) => {
+    resolve = res
+    reject = rej
+  })
+  return { _promise: promise, _resolve: resolve, _reject: reject }
 }
 
 export default grfn
