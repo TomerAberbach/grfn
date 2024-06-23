@@ -6,7 +6,7 @@
     "email": "tomeraberbach@gmail.com",
     "url": "https://tomeraberba.ch"
   },
-  "description": "A tiny (~400B) utility that executes a dependency graph of async functions as concurrently as possible.",
+  "description": "A tiny (~315B) utility that executes a dependency graph of async functions as concurrently as possible.",
   "keywords": [
     "graph",
     "dag",
