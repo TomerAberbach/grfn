@@ -22,6 +22,9 @@
   <a href="https://licenses.dev/npm/grfn">
     <img src="https://licenses.dev/b/npm/grfn" alt="licenses" />
   </a>
+  <a href="https://github.com/sponsors/TomerAberbach">
+    <img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor">
+  </a>
 </div>
 
 <div align="center">
