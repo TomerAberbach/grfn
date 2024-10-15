@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "author": {
     "name": "Tomer Aberbach",
-    "email": "tomeraberbach@gmail.com",
+    "email": "tomer@aberba.ch",
     "url": "https://tomeraberba.ch"
   },
   "description": "A tiny (~315B) utility that executes a dependency graph of async functions as concurrently as possible.",
