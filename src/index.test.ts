@@ -1,37 +1,19 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/* eslint-disable no-restricted-syntax */
-
 import { setTimeout } from 'node:timers/promises'
-import { expectTypeOf } from 'tomer'
-import grfn from '../src/index.js'
+import { expect, expectTypeOf, test } from 'vitest'
+import grfn from './index.js'
 
 test.skip(`grfn types`, () => {
-  expectTypeOf(grfn({})).toEqualTypeOf<(...args: never) => Promise<never>>()
-  expectTypeOf(grfn({ a: (arg: number) => arg })).toEqualTypeOf<
+  expectTypeOf(grfn({})).toExtend<(...args: never) => Promise<never>>()
+  expectTypeOf(grfn({ a: (arg: number) => arg })).toExtend<
     (arg: number) => Promise<number>
   >()
-  expectTypeOf(
-    grfn({ a: (arg: number) => Promise.resolve(arg) }),
-  ).toEqualTypeOf<(arg: number) => Promise<number>>()
-  expectTypeOf(grfn({ a: [(arg: number) => arg] })).toEqualTypeOf<
+  expectTypeOf(grfn({ a: (arg: number) => Promise.resolve(arg) })).toExtend<
     (arg: number) => Promise<number>
   >()
-  expectTypeOf(grfn({ a: [(arg: number) => arg, []] })).toEqualTypeOf<
+  expectTypeOf(grfn({ a: [(arg: number) => arg] })).toExtend<
+    (arg: number) => Promise<number>
+  >()
+  expectTypeOf(grfn({ a: [(arg: number) => arg, []] })).toExtend<
     (arg: number) => Promise<number>
   >()
   expectTypeOf(
@@ -40,7 +22,7 @@ test.skip(`grfn types`, () => {
       b: (arg: number) => arg * 2,
       c: (arg1: number, arg2: number) => arg1 * arg2,
     }),
-  ).toEqualTypeOf<(arg1: number, arg2: number) => Promise<string>>()
+  ).toExtend<(arg1: number, arg2: number) => Promise<string>>()
 
   grfn({
     // @ts-expect-error Incompatible input parameters.

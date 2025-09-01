@@ -1,21 +1,3 @@
-/**
- * Copyright 2021 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/* eslint-disable typescript/no-explicit-any */
-
 import type { Join, Simplify, UnionToIntersection } from 'type-fest'
 
 declare const grfn: <const Entries extends VertexEntries>(
@@ -61,7 +43,7 @@ type GetDependencylessFunctions<Entries extends VertexEntries> = {
 type CheckUndefinedDependencyKeys<Entries extends VertexEntries> =
   GetUndefinedDependencyKeys<Entries> extends never
     ? []
-    : [['Error: undefined vertices', GetUndefinedDependencyKeys<Entries>]]
+    : [[`Error: undefined vertices`, GetUndefinedDependencyKeys<Entries>]]
 type GetUndefinedDependencyKeys<Entries extends VertexEntries> = Exclude<
   GetDependencyKeys<Entries>,
   GetDependentKeys<Entries>
@@ -69,7 +51,7 @@ type GetUndefinedDependencyKeys<Entries extends VertexEntries> = Exclude<
 
 type CheckOutputKeys<Entries extends VertexEntries> =
   IsUnion<GetOutputKeys<Entries>> extends true
-    ? [['Error: not exactly one output vertex', GetOutputKeys<Entries>]]
+    ? [[`Error: not exactly one output vertex`, GetOutputKeys<Entries>]]
     : []
 type IsUnion<Type> = [Type] extends [UnionToIntersection<Type>] ? false : true
 type GetOutputKeys<Entries extends VertexEntries> = Exclude<
@@ -80,11 +62,11 @@ type GetOutputKeys<Entries extends VertexEntries> = Exclude<
 type CheckCycles<Entries extends VertexEntries> =
   GetCycles<Entries> extends never
     ? []
-    : [['Error: cycles', GetCycles<Entries>]]
+    : [[`Error: cycles`, GetCycles<Entries>]]
 type GetCycles<Entries extends VertexEntries> = Simplify<
   {
     [Key in keyof Entries]: GetCycleFrom<Entries, Key> extends string[]
-      ? Join<GetCycleFrom<Entries, Key>, ' -> '>
+      ? Join<GetCycleFrom<Entries, Key>, ` -> `>
       : never
   }[keyof Entries]
 >
